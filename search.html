@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteSpace — Find Your Next Course</title>
+    <meta name="description" content="ByteSpace is an online learning platform offering expert-led courses in design, development, marketing, and more. Start learning today.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header header--dark" id="main-header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo" id="header-logo">
+                <svg class="header__logo-icon" width="29" height="32" viewBox="0 0 29 32" fill="none">
+                    <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20"/>
+                </svg>
+                <span class="header__logo-text">ByteSpace</span>
+            </a>
+            <nav class="header__nav" id="header-nav">
+                <a href="index.html" class="header__nav-link">Home</a>
+                <a href="search.html" class="header__nav-link header__nav-link--active">Courses</a>
+                <a href="my-courses.html" class="header__nav-link" id="nav-my-courses-link">My Courses</a>
+                <a href="creators.html" class="header__nav-link">Creators</a>
+            </nav>
+            <div class="header__actions" id="header-actions">
+                <a href="login.html" class="header__action-link">Sign In</a>
+                <a href="register.html" class="header__action-link">Join Us</a>
+                <button class="header__cart-btn" id="header-cart" aria-label="Shopping cart" style="position: relative;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    <span class="cart-badge-count" id="header-cart-badge" style="display: none; position: absolute; top: -4px; right: -4px; background: #D4FB20; color: #242528; border-radius: 50%; font-size: 11px; font-weight: 700; width: 18px; height: 18px; line-height: 18px; text-align: center;">0</span>
+                </button>
+            </div>
+            <button class="header__mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero-section">
+        <div class="hero__bg-pattern"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">Find Your Next Course</h1>
+            <div class="hero__search" id="hero-search">
+                <form class="hero__search-input-wrapper" id="search-form" onsubmit="event.preventDefault();" style="display: flex; align-items: center; width: 100%;">
+                    <svg class="hero__search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#82868E" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" class="hero__search-input" placeholder="Search" id="search-input" autocomplete="off">
+                </form>
+                <button class="btn btn--lime hero__search-btn" id="search-btn" type="button">
+                    Courses
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <section class="categories" id="categories-section">
+        <div class="categories__container">
+            <div class="categories__tabs" id="category-tabs">
+                <button class="categories__tab categories__tab--active" data-category="featured">Featured</button>
+                <button class="categories__tab" data-category="music">Music</button>
+                <button class="categories__tab" data-category="drawing">Drawing & Painting</button>
+                <button class="categories__tab" data-category="marketing">Marketing</button>
+                <button class="categories__tab" data-category="animation">Animation</button>
+                <button class="categories__tab" data-category="social">Social Media</button>
+                <button class="categories__tab" data-category="uiux">UI/UX Design</button>
+                <button class="categories__tab" data-category="creative">Creative Marketing</button>
+                <button class="categories__tab" data-category="cooking">Cooking</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Grid -->
+    <section class="courses" id="courses-section">
+        <div class="courses__container">
+            <div class="courses__grid" id="courses-grid">
+                <!-- Dynamically rendered by app.js initSearchPage() -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <button class="pagination__btn pagination__btn--prev" id="pagination-prev" aria-label="Previous page">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <span class="pagination__page pagination__page--active" data-page="1">1</span>
+                <span class="pagination__page" data-page="2">2</span>
+                <span class="pagination__page" data-page="3">3</span>
+                <span class="pagination__page" data-page="4">4</span>
+                <span class="pagination__page" data-page="5">5</span>
+                <button class="pagination__btn pagination__btn--next" id="pagination-next" aria-label="Next page">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="main-footer">
+        <div class="footer__divider-top"></div>
+        <div class="footer__container">
+            <div class="footer__top">
+                <div class="footer__brand">
+                    <div class="footer__logo">
+                        <svg width="29" height="32" viewBox="0 0 29 32" fill="none">
+                            <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20"/>
+                        </svg>
+                        <span class="footer__logo-text">ByteSpace</span>
+                    </div>
+                    <p class="footer__desc">Stay Up to date with our latest features and releases by joining our newsletter.</p>
+                    <div class="footer__newsletter" id="footer-newsletter">
+                        <div class="footer__newsletter-form">
+                            <input type="email" class="footer__newsletter-input" placeholder="Enter your email" id="newsletter-email">
+                            <button class="btn btn--lime footer__newsletter-btn" id="newsletter-search-btn">Search</button>
+                        </div>
+                        <p class="footer__newsletter-disclaimer">By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.</p>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <div class="footer__col">
+                        <h4 class="footer__col-title">Browse</h4>
+                        <ul class="footer__col-list">
+                            <li><a href="search.html?cat=featured">Featured Courses</a></li>
+                            <li><a href="search.html">Featured Categories</a></li>
+                            <li><a href="search.html?cat=marketing">Business</a></li>
+                            <li><a href="search.html?cat=animation">IT</a></li>
+                            <li><a href="search.html?cat=uiux">Design</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__col">
+                        <ul class="footer__col-list footer__col-list--no-title">
+                            <li><a href="search.html?cat=uiux">Development</a></li>
+                            <li><a href="search.html?cat=marketing">Marketing</a></li>
+                            <li><a href="search.html?cat=drawing">Photography</a></li>
+                            <li><a href="search.html?cat=creative">Finance</a></li>
+                            <li><a href="search.html?cat=music">Music</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__col">
+                        <h4 class="footer__col-title">Platform</h4>
+                        <ul class="footer__col-list">
+                            <li><a href="#">Become a Creator</a></li>
+                            <li><a href="#">Affiliate Program</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="footer__bottom-divider"></div>
+                <div class="footer__bottom-content">
+                    <p class="footer__copyright">@ 2023 ByteSpace. All rights reserved.</p>
+                    <div class="footer__legal">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookies Settings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
