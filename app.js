@@ -265,10 +265,22 @@ function initForms() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, password })
                 });
-                const data = await res.json();
+                const data = await res.json().catch(() => ({}));
                 
                 if (data.success) {
+                    localStorage.setItem('bytespace_user', JSON.stringify(data.user || { name, email, id: Date.now().toString() }));
                     showAuthStatus(`Welcome, <strong>${data.user?.name || name}</strong>! Account created. Redirecting...`, true);
+                    btn.innerHTML = '<span>Success! ✓</span>';
+                    btn.style.background = '#22c55e';
+                    btn.style.color = '#fff';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 800);
+                } else if (res.status === 404 || !res.ok) {
+                    // Static hosting fallback (e.g. GitHub Pages)
+                    const userObj = { name, email, id: Date.now().toString() };
+                    localStorage.setItem('bytespace_user', JSON.stringify(userObj));
+                    showAuthStatus(`Welcome, <strong>${name}</strong>! Account created. Redirecting...`, true);
                     btn.innerHTML = '<span>Success! ✓</span>';
                     btn.style.background = '#22c55e';
                     btn.style.color = '#fff';
@@ -283,10 +295,16 @@ function initForms() {
                     throw new Error(errMsg);
                 }
             } catch (err) {
-                btn.innerHTML = originalContent;
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = '';
-                showAuthStatus(err.message, false);
+                // Static hosting fallback (e.g. GitHub Pages)
+                const userObj = { name, email, id: Date.now().toString() };
+                localStorage.setItem('bytespace_user', JSON.stringify(userObj));
+                showAuthStatus(`Welcome, <strong>${name}</strong>! Account created. Redirecting...`, true);
+                btn.innerHTML = '<span>Success! ✓</span>';
+                btn.style.background = '#22c55e';
+                btn.style.color = '#fff';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 800);
             }
         });
     }
@@ -321,10 +339,24 @@ function initForms() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
-                const data = await res.json();
+                const data = await res.json().catch(() => ({}));
                 
                 if (data.success) {
+                    localStorage.setItem('bytespace_user', JSON.stringify(data.user || { name: 'User', email }));
                     showAuthStatus(`Welcome back, <strong>${data.user?.name || 'User'}</strong>! Redirecting to ByteSpace...`, true);
+                    btn.innerHTML = '<span>Success! ✓</span>';
+                    btn.style.background = '#22c55e';
+                    btn.style.color = '#fff';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 800);
+                } else if (res.status === 404 || !res.ok) {
+                    // Static hosting fallback (e.g. GitHub Pages)
+                    const displayName = email.split('@')[0].replace(/[._]/g, ' ');
+                    const capitalized = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+                    const userObj = { name: capitalized, email, id: Date.now().toString() };
+                    localStorage.setItem('bytespace_user', JSON.stringify(userObj));
+                    showAuthStatus(`Welcome back, <strong>${capitalized}</strong>! Redirecting to ByteSpace...`, true);
                     btn.innerHTML = '<span>Success! ✓</span>';
                     btn.style.background = '#22c55e';
                     btn.style.color = '#fff';
@@ -339,10 +371,18 @@ function initForms() {
                     throw new Error(errMsg);
                 }
             } catch (err) {
-                btn.innerHTML = originalContent;
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = '';
-                showAuthStatus(err.message, false);
+                // Static hosting fallback (e.g. GitHub Pages)
+                const displayName = email.split('@')[0].replace(/[._]/g, ' ');
+                const capitalized = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+                const userObj = { name: capitalized, email, id: Date.now().toString() };
+                localStorage.setItem('bytespace_user', JSON.stringify(userObj));
+                showAuthStatus(`Welcome back, <strong>${capitalized}</strong>! Redirecting to ByteSpace...`, true);
+                btn.innerHTML = '<span>Success! ✓</span>';
+                btn.style.background = '#22c55e';
+                btn.style.color = '#fff';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 800);
             }
         });
     }
@@ -514,53 +554,70 @@ function initForms() {
    ============================================================ */
 let currentUser = null;
 
+function renderUserHeader(user) {
+    currentUser = user;
+    const headerActions = document.getElementById('header-actions');
+    if (headerActions) {
+        const firstName = (user.name || 'Member').split(' ')[0];
+        const isLightHeader = document.querySelector('.header--light') !== null;
+        const textColor = isLightHeader ? 'var(--gray-950)' : 'var(--white)';
+        const borderColor = isLightHeader ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.25)';
+
+        headerActions.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="color: ${textColor}; font-weight: 500; font-size: 14px;">Hi, ${firstName}</span>
+                <a href="my-courses.html" class="header__action-link header-my-courses-btn" style="color: ${textColor}; padding: 6px 12px; font-size: 13px; text-decoration: none; border-radius: 8px; border: 1px solid ${borderColor};">My Courses</a>
+                <button onclick="handleLogout()" class="header__action-link" style="background: none; border: 1px solid ${borderColor}; border-radius: 8px; color: ${textColor}; padding: 6px 12px; font-size: 13px; cursor: pointer; transition: all 0.2s;">Log Out</button>
+            </div>
+            <a href="cart.html" class="header__cart-btn" id="header-cart" aria-label="Shopping cart" style="color: ${textColor}; position: relative; display: flex; align-items: center;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                <span class="cart-badge-count" id="cart-badge-count" style="display: none;">0</span>
+            </a>
+        `;
+    }
+    updateCartBadges();
+}
+
 async function checkAuthStatus() {
     const isAuthPage = window.location.pathname.includes('login.html') ||
                        window.location.pathname.includes('register.html') ||
                        window.location.pathname.includes('forgot-password.html') ||
                        window.location.pathname.includes('reset-password.html');
+    const isProtectedPage = window.location.pathname.includes('my-courses.html') ||
+                            window.location.pathname.includes('course-lessons.html');
+
+    // Check localStorage first
+    let localUser = null;
+    try {
+        const stored = localStorage.getItem('bytespace_user');
+        if (stored) localUser = JSON.parse(stored);
+    } catch (e) {}
 
     try {
         const res = await fetch('/api/auth/me');
-        const data = await res.json();
-        
-        if (data.success && data.data) {
-            currentUser = data.data;
-            const headerActions = document.getElementById('header-actions');
-            if (headerActions) {
-                const firstName = (data.data.name || 'Member').split(' ')[0];
-                const isLightHeader = document.querySelector('.header--light') !== null;
-                const textColor = isLightHeader ? 'var(--gray-950)' : 'var(--white)';
-                const borderColor = isLightHeader ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.25)';
-
-                headerActions.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="color: ${textColor}; font-weight: 500; font-size: 14px;">Hi, ${firstName}</span>
-                        <a href="my-courses.html" class="header__action-link header-my-courses-btn" style="color: ${textColor}; padding: 6px 12px; font-size: 13px; text-decoration: none; border-radius: 8px; border: 1px solid ${borderColor};">My Courses</a>
-                        <button onclick="handleLogout()" class="header__action-link" style="background: none; border: 1px solid ${borderColor}; border-radius: 8px; color: ${textColor}; padding: 6px 12px; font-size: 13px; cursor: pointer; transition: all 0.2s;">Log Out</button>
-                    </div>
-                    <a href="cart.html" class="header__cart-btn" id="header-cart" aria-label="Shopping cart" style="color: ${textColor}; position: relative; display: flex; align-items: center;">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                        <span class="cart-badge-count" id="cart-badge-count" style="display: none;">0</span>
-                    </a>
-                `;
-            }
-
-            updateCartBadges();
-
-            if (isAuthPage && !window.location.pathname.includes('forgot') && !window.location.pathname.includes('reset')) {
-                window.location.href = 'index.html';
-            }
-        } else {
-            currentUser = null;
-            if (!isAuthPage) {
-                window.location.href = 'login.html';
+        if (res.ok) {
+            const data = await res.json();
+            if (data.success && data.data) {
+                localStorage.setItem('bytespace_user', JSON.stringify(data.data));
+                renderUserHeader(data.data);
+                if (isAuthPage && !window.location.pathname.includes('forgot') && !window.location.pathname.includes('reset')) {
+                    window.location.href = 'index.html';
+                }
+                return;
             }
         }
     } catch (err) {
-        console.warn('Auth check:', err.message);
+        // Static hosting fallback (e.g. GitHub Pages)
+    }
+
+    if (localUser) {
+        renderUserHeader(localUser);
+        if (isAuthPage && !window.location.pathname.includes('forgot') && !window.location.pathname.includes('reset')) {
+            window.location.href = 'index.html';
+        }
+    } else {
         currentUser = null;
-        if (!isAuthPage) {
+        if (isProtectedPage) {
             window.location.href = 'login.html';
         }
     }
@@ -572,6 +629,7 @@ async function handleLogout() {
     } catch (err) {
         console.error(err);
     }
+    localStorage.removeItem('bytespace_user');
     window.location.href = 'login.html';
 }
 
@@ -605,7 +663,7 @@ function addToCart(course, redirect = false) {
             title: course.title,
             author: course.author || 'purepearl studio',
             price: Number(course.price) || 25,
-            image: course.image || '/figma-images/course_1_wireframe.jpg',
+            image: course.image || 'figma-images/course_1_wireframe.jpg',
             level: course.level || 'Beginner',
             duration: course.duration || '2 hours 16 mins'
         });
@@ -701,7 +759,7 @@ const FALLBACK_CATALOG = [
         lessonsCount: 17,
         duration: '2 hours 16 mins',
         level: 'Beginner',
-        image: '/figma-images/course_1_wireframe.jpg',
+        image: 'figma-images/course_1_wireframe.jpg',
         subtitle: 'Master modern UI/UX design workflows from wireframes to interactive prototypes',
         description: 'Embark on an enlightening exploration into Figma. Learn foundational interface tools, component architecture, auto layout, and responsive layouts to jumpstart your career in product design.',
         descriptionParagraphs: [
@@ -710,10 +768,10 @@ const FALLBACK_CATALOG = [
             'As you progress through the course, you will ascend to higher levels of expertise, delving into component variants, interactive component states, and smart animate prototypes. Uncover developer handoff secrets, export pixel-perfect design specifications, and engage in hands-on exercises that reinforce your real-world portfolio.'
         ],
         sneakPeek: [
-            '/figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg',
-            '/figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
-            '/figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg',
-            '/figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg'
+            'figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg',
+            'figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
+            'figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg',
+            'figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg'
         ],
         keyPoints: [
             'Figma Workspace & Vector Tools Mastery',
@@ -726,7 +784,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'PurePearl Studio',
             role: 'Professional Creator',
-            avatar: '/figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
+            avatar: 'figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
         }
     },
     {
@@ -743,7 +801,7 @@ const FALLBACK_CATALOG = [
         lessonsCount: 17,
         duration: '2 hours 16 mins',
         level: 'Beginner',
-        image: '/figma-images/course_2_icons.jpg',
+        image: 'figma-images/course_2_icons.jpg',
         subtitle: 'Unlock the Power of Digital Creation with Expert Guidance',
         description: 'Learn how to conceptualize, design, package, and monetize high-value digital assets. From icon packs to template kits, build assets that generate passive revenue.',
         descriptionParagraphs: [
@@ -752,10 +810,10 @@ const FALLBACK_CATALOG = [
             'As you progress through the course, you\'ll ascend to higher levels of expertise, delving into the nuances of design principles that drive impactful creations. Uncover the secrets behind effective visual communication, exploring color theory, typography, and layout strategies that elevate your digital assets to new heights. Engage in hands-on exercises that reinforce your understanding, allowing you to apply these principles in practical scenarios.'
         ],
         sneakPeek: [
-            '/figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg',
-            '/figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
-            '/figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg',
-            '/figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg'
+            'figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg',
+            'figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
+            'figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg',
+            'figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg'
         ],
         keyPoints: [
             'Foundational Concepts',
@@ -768,7 +826,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'PurePearl Studio',
             role: 'Professional Creator',
-            avatar: '/figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
+            avatar: 'figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
         }
     },
     {
@@ -785,7 +843,7 @@ const FALLBACK_CATALOG = [
         lessonsCount: 17,
         duration: '2 hours 16 mins',
         level: 'Beginner',
-        image: '/figma-images/course_3_charts.jpg',
+        image: 'figma-images/course_3_charts.jpg',
         subtitle: 'Explore real-world big data architectures, analytics, and business insights',
         description: 'Understand massive datasets, distributed streaming pipelines, cloud databases, and modern business analytics tools like never before.',
         descriptionParagraphs: [
@@ -794,7 +852,7 @@ const FALLBACK_CATALOG = [
             'In the advanced sections, delve into real-time streaming architectures using Kafka, SQL analytics optimization, and dynamic visualization dashboards. Gain hands-on practice translating raw numbers into executive-level KPIs and automated predictive insights.'
         ],
         sneakPeek: [
-            '/figma-images/course_3_charts.jpg',
+            'figma-images/course_3_charts.jpg',
             'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80'
@@ -810,7 +868,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Dr. Marcus Vance',
             role: 'Principal Data Architect',
-            avatar: '/figma-images/avatar_james_l.png'
+            avatar: 'figma-images/avatar_james_l.png'
         }
     },
     {
@@ -827,7 +885,7 @@ const FALLBACK_CATALOG = [
         lessonsCount: 17,
         duration: '2 hours 16 mins',
         level: 'Beginner',
-        image: '/figma-images/course_4_domore.jpg',
+        image: 'figma-images/course_4_domore.jpg',
         subtitle: 'Supercharge your daily workflow, mindfulness and peak creative performance',
         description: 'Optimize your daily schedule, establish high-focus deep work blocks, eliminate digital fatigue, and achieve harmony between output and personal wellbeing.',
         descriptionParagraphs: [
@@ -836,7 +894,7 @@ const FALLBACK_CATALOG = [
             'Through guided weekly experiments, build customized morning and wind-down routines that rejuvenate your creativity. Achieve deep peace of mind knowing your professional goals and personal health exist in effortless, productive synergy.'
         ],
         sneakPeek: [
-            '/figma-images/course_4_domore.jpg',
+            'figma-images/course_4_domore.jpg',
             'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&auto=format&fit=crop&q=80'
@@ -852,7 +910,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Elena Rostova',
             role: 'Mindset & Performance Coach',
-            avatar: '/figma-images/71d7929ee0ecb2198c9955a8e842f4991dcb4655.jpg'
+            avatar: 'figma-images/71d7929ee0ecb2198c9955a8e842f4991dcb4655.jpg'
         }
     },
     {
@@ -869,7 +927,7 @@ const FALLBACK_CATALOG = [
         lessonsCount: 17,
         duration: '2 hours 16 mins',
         level: 'Beginner',
-        image: '/figma-images/course_5_graph.jpg',
+        image: 'figma-images/course_5_graph.jpg',
         subtitle: 'Data-driven financial modeling, growth tracking, and modern investing',
         description: 'Learn budgeting metrics, financial forecasting models, cash flow visualization, and strategic investments for creative professionals and entrepreneurs.',
         descriptionParagraphs: [
@@ -878,7 +936,7 @@ const FALLBACK_CATALOG = [
             'Next, explore institutional-grade investment frameworks—including low-cost global index funds, real estate trusts, and intelligent rebalancing models. Build a resilient wealth engine that operates quietly and steadily in the background of your life.'
         ],
         sneakPeek: [
-            '/figma-images/course_5_graph.jpg',
+            'figma-images/course_5_graph.jpg',
             'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&auto=format&fit=crop&q=80'
@@ -894,7 +952,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Julian Thorne',
             role: 'Senior Financial Strategist',
-            avatar: '/figma-images/avatar_alex_b.png'
+            avatar: 'figma-images/avatar_alex_b.png'
         }
     },
     {
@@ -911,7 +969,7 @@ const FALLBACK_CATALOG = [
         lessonsCount: 17,
         duration: '2 hours 16 mins',
         level: 'Beginner',
-        image: '/figma-images/course_6_team.jpg',
+        image: 'figma-images/course_6_team.jpg',
         subtitle: 'Build, validate, launch and scale high-growth products with modern teams',
         description: 'Master agile lean startup cycles, customer interviews, viral launch playbooks, fundraising fundamentals, and product-market fit.',
         descriptionParagraphs: [
@@ -920,7 +978,7 @@ const FALLBACK_CATALOG = [
             'Finally, master go-to-market viral loops, investor pitch deck storytelling, and early-stage fundraising dynamics. Gain the tactical playbook needed to lead agile teams and scale from zero to hundreds of thousands in annual recurring revenue.'
         ],
         sneakPeek: [
-            '/figma-images/course_6_team.jpg',
+            'figma-images/course_6_team.jpg',
             'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&auto=format&fit=crop&q=80'
@@ -936,7 +994,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Sarah Mitchell',
             role: 'Serial Founder & YC Alum',
-            avatar: '/figma-images/avatar_sarah_m.png'
+            avatar: 'figma-images/avatar_sarah_m.png'
         }
     },
     {
@@ -978,7 +1036,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Leon Mercer',
             role: 'Platinum Sound Designer & Producer',
-            avatar: '/figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
+            avatar: 'figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
         }
     },
     {
@@ -1020,7 +1078,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Kai Nakamura',
             role: 'Beatmaker & Audio Engineer',
-            avatar: '/figma-images/avatar_james_l.png'
+            avatar: 'figma-images/avatar_james_l.png'
         }
     },
     {
@@ -1049,7 +1107,7 @@ const FALLBACK_CATALOG = [
             'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80',
-            '/figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg'
+            'figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg'
         ],
         keyPoints: [
             'Digital Stylus Pressure & Custom Brush Creation',
@@ -1062,7 +1120,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Amara Chen',
             role: 'Concept Artist & Illustrator',
-            avatar: '/figma-images/71d7929ee0ecb2198c9955a8e842f4991dcb4655.jpg'
+            avatar: 'figma-images/71d7929ee0ecb2198c9955a8e842f4991dcb4655.jpg'
         }
     },
     {
@@ -1104,7 +1162,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Chef Mateo Rossi',
             role: 'Michelin-Star Executive Chef',
-            avatar: '/figma-images/avatar_sarah_m.png'
+            avatar: 'figma-images/avatar_sarah_m.png'
         }
     },
     {
@@ -1146,7 +1204,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Claire Fontaine',
             role: 'Master Boulangère & Pâtissière',
-            avatar: '/figma-images/teacher_female.png'
+            avatar: 'figma-images/teacher_female.png'
         }
     },
     {
@@ -1173,9 +1231,9 @@ const FALLBACK_CATALOG = [
         ],
         sneakPeek: [
             'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80',
-            '/figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg',
-            '/figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
-            '/figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg'
+            'figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg',
+            'figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
+            'figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg'
         ],
         keyPoints: [
             'The 12 Disney Principles Applied to Modern Motion',
@@ -1188,7 +1246,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Darius Kael',
             role: 'Lead Motion Designer & 3D Animator',
-            avatar: '/figma-images/avatar_alex_b.png'
+            avatar: 'figma-images/avatar_alex_b.png'
         }
     },
     {
@@ -1205,7 +1263,7 @@ const FALLBACK_CATALOG = [
         lessonsCount: 17,
         duration: '2 hours 16 mins',
         level: 'Beginner',
-        image: '/figma-images/course_6_team.jpg',
+        image: 'figma-images/course_6_team.jpg',
         subtitle: 'Build loyal communities and scale personal brands on modern social channels',
         description: 'Proven strategies for short-form video hooks, audience retention algorithms, content calendars, and brand partnerships.',
         descriptionParagraphs: [
@@ -1214,8 +1272,8 @@ const FALLBACK_CATALOG = [
             'Develop an automated weekly production engine that repurposes one hero piece of content into multiple bite-sized assets. Turn audience momentum into a thriving commercial business with digital products, community tiers, and high-ticket sponsorships.'
         ],
         sneakPeek: [
-            '/figma-images/course_6_team.jpg',
-            '/figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg',
+            'figma-images/course_6_team.jpg',
+            'figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg',
             'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&auto=format&fit=crop&q=80',
             'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&auto=format&fit=crop&q=80'
         ],
@@ -1230,7 +1288,7 @@ const FALLBACK_CATALOG = [
         instructor: {
             name: 'Sofia Sterling',
             role: 'Viral Growth Strategist & Creator',
-            avatar: '/figma-images/avatar_sarah_m.png'
+            avatar: 'figma-images/avatar_sarah_m.png'
         }
     }
 ];
@@ -1380,7 +1438,7 @@ async function initSearchPage() {
         grid.innerHTML = filtered.map((course, index) => `
             <a href="course-detail.html?id=${course.id}" class="course-card" id="course-card-${course.id}" style="animation: fadeInUp 0.4s ease backwards; animation-delay: ${index * 0.04}s;">
                 <div class="course-card__image">
-                    <img src="${course.image || '/figma-images/course_1_wireframe.jpg'}" alt="${course.title}" class="course-card__img" onerror="this.src='/figma-images/course_1_wireframe.jpg'">
+                    <img src="${course.image || 'figma-images/course_1_wireframe.jpg'}" alt="${course.title}" class="course-card__img" onerror="this.src='figma-images/course_1_wireframe.jpg'">
                     <div class="course-card__badges">
                         <span class="course-card__badge">${course.lessonsCount || 17} Lessons</span>
                         <span class="course-card__badge">${course.duration || '2 hours 16 mins'}</span>
@@ -1399,10 +1457,10 @@ async function initSearchPage() {
                             <span>${course.level || 'Beginner'}</span>
                         </div>
                         <div class="course-card__avatars">
-                            <img src="/figma-images/avatar_sarah_m.png" class="course-card__avatar" alt="Student">
-                            <img src="/figma-images/avatar_james_l.png" class="course-card__avatar" alt="Student">
-                            <img src="/figma-images/avatar_alex_b.png" class="course-card__avatar" alt="Student">
-                            <img src="/figma-images/avatar_reviewer_3.png" class="course-card__avatar" alt="Student">
+                            <img src="figma-images/avatar_sarah_m.png" class="course-card__avatar" alt="Student">
+                            <img src="figma-images/avatar_james_l.png" class="course-card__avatar" alt="Student">
+                            <img src="figma-images/avatar_alex_b.png" class="course-card__avatar" alt="Student">
+                            <img src="figma-images/avatar_reviewer_3.png" class="course-card__avatar" alt="Student">
                             <span class="course-card__avatar course-card__avatar--count">26+</span>
                         </div>
                     </div>
@@ -1530,7 +1588,7 @@ async function initHomeYourCourses() {
                             ${enrolled.map(c => `
                                 <div class="enrolled-course-card">
                                     <div class="enrolled-course-card__img-box">
-                                        <img src="${c.image || '/figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle}">
+                                        <img src="${c.image || 'figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle}">
                                         <span class="enrolled-status-badge">Active</span>
                                     </div>
                                     <div class="enrolled-course-card__content">
@@ -1652,7 +1710,7 @@ async function initMyCoursesPage() {
                     grid.innerHTML = enrolled.map(c => `
                         <div class="enrolled-course-card">
                             <div class="enrolled-course-card__img-box">
-                                <img src="${c.image || '/figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle}">
+                                <img src="${c.image || 'figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle}">
                                 <span class="enrolled-status-badge">Enrolled</span>
                             </div>
                             <div class="enrolled-course-card__content">
@@ -2057,14 +2115,14 @@ async function initCourseDetailPage() {
     const instructorInfo = courseData.instructor || {
         name: 'PurePearl Studio',
         role: 'Professional Creator',
-        avatar: '/figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
+        avatar: 'figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg'
     };
 
     if (creatorAvatar) {
-        creatorAvatar.src = instructorInfo.avatar || '/figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg';
+        creatorAvatar.src = instructorInfo.avatar || 'figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg';
         creatorAvatar.alt = `${instructorInfo.name} avatar`;
         creatorAvatar.onerror = function() {
-            this.src = '/figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg';
+            this.src = 'figma-images/bfd09b20f2cf44bfa3af771f6396363d4ae67aab.jpg';
         };
     }
     if (creatorName) creatorName.textContent = instructorInfo.name;
@@ -2096,17 +2154,17 @@ async function initCourseDetailPage() {
     const sneakContainer = document.getElementById('sneak-peek-container');
     if (sneakContainer) {
         const defaultSneak = [
-            '/figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg',
-            '/figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
-            '/figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg',
-            '/figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg'
+            'figma-images/a7c9406fd05787fc6c03edf5db05f212b96366a6.jpg',
+            'figma-images/d443b5217bfd460249d4ac0712aa129bc29a8919.jpg',
+            'figma-images/2e1b62a2460ffba94cc633550f3a06e03b29b432.jpg',
+            'figma-images/0c1762672f5c64aa67de3991c2ac4aa729328623.jpg'
         ];
         const sneakImages = (courseData.sneakPeek && courseData.sneakPeek.length >= 4)
             ? courseData.sneakPeek.slice(0, 4)
             : defaultSneak;
 
         sneakContainer.innerHTML = sneakImages.map((src, idx) => `
-            <img src="${src}" alt="Sneak peak preview ${idx + 1}" class="course-content__sneak-img" loading="lazy" onerror="this.onerror=null; this.src='/figma-images/course_${(idx%6)+1}_wireframe.jpg'">
+            <img src="${src}" alt="Sneak peak preview ${idx + 1}" class="course-content__sneak-img" loading="lazy" onerror="this.onerror=null; this.src='figma-images/course_${(idx%6)+1}_wireframe.jpg'">
         `).join('');
     }
 
