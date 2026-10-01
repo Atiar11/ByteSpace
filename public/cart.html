@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart & Checkout — ByteSpace</title>
+    <meta name="description" content="Review your course cart and choose payment options to unlock your learning journey on ByteSpace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="cart-page-body">
+
+    <!-- Header -->
+    <header class="header header--light" id="main-header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo" id="header-logo">
+                <svg class="header__logo-icon" width="29" height="32" viewBox="0 0 29 32" fill="none">
+                    <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20"/>
+                </svg>
+                <span class="header__logo-text" style="color: var(--gray-950);">ByteSpace</span>
+            </a>
+            <nav class="header__nav" id="header-nav">
+                <a href="index.html" class="header__nav-link">Home</a>
+                <a href="search.html" class="header__nav-link">Courses</a>
+                <a href="my-courses.html" class="header__nav-link">My Courses</a>
+                <a href="creators.html" class="header__nav-link">Creators</a>
+            </nav>
+            <div class="header__actions" id="header-actions">
+                <a href="login.html" class="header__action-link" style="color: var(--gray-950);">Sign In</a>
+                <a href="register.html" class="header__action-link" style="color: var(--gray-950);">Join Us</a>
+                <button class="header__cart-btn" id="header-cart" aria-label="Shopping cart" style="color: var(--gray-950);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    <span class="cart-badge-count" id="cart-badge-count" style="display: none;">0</span>
+                </button>
+            </div>
+            <button class="header__mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Checkout Section -->
+    <main class="checkout-main">
+        <div class="checkout-container">
+            <!-- Breadcrumbs -->
+            <nav class="checkout-breadcrumbs">
+                <a href="index.html">Home</a>
+                <span>&rsaquo;</span>
+                <a href="search.html">Courses</a>
+                <span>&rsaquo;</span>
+                <span class="active">Cart & Checkout</span>
+            </nav>
+
+            <h1 class="checkout-title">Review Cart & Checkout</h1>
+            <p class="checkout-subtitle">Secure enrollment with immediate access to all course materials and lessons.</p>
+
+            <div class="checkout-layout">
+                <!-- Left: Cart Items & Payment Method -->
+                <div class="checkout-left">
+                    <!-- Cart Items Card -->
+                    <div class="checkout-card" id="cart-items-card">
+                        <div class="checkout-card__header">
+                            <h2 class="checkout-card__title">1. Your Selected Courses</h2>
+                            <span class="checkout-items-count" id="checkout-items-count">0 courses</span>
+                        </div>
+                        <div class="checkout-cart-list" id="checkout-cart-list">
+                            <!-- Items injected dynamically by JS -->
+                        </div>
+
+                        <!-- Empty Cart State -->
+                        <div class="cart-empty-state" id="cart-empty-state" style="display: none;">
+                            <div class="cart-empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#82868E" stroke-width="1.8">
+                                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+                                </svg>
+                            </div>
+                            <h3>Your cart is empty</h3>
+                            <p>Explore our trending courses and start learning today!</p>
+                            <a href="search.html" class="btn btn--lime">Explore Courses</a>
+                        </div>
+                    </div>
+
+                    <!-- Payment Options Card -->
+                    <div class="checkout-card" id="payment-options-card">
+                        <div class="checkout-card__header">
+                            <h2 class="checkout-card__title">2. Choose Payment Method</h2>
+                            <span class="checkout-secure-badge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                                256-Bit SSL Encrypted
+                            </span>
+                        </div>
+
+                        <!-- Payment Method Tabs -->
+                        <div class="payment-tabs">
+                            <button type="button" class="payment-tab active" data-method="card">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                Credit / Debit Card
+                            </button>
+                            <button type="button" class="payment-tab" data-method="paypal">
+                                <span class="paypal-logo-text">PayPal</span>
+                            </button>
+                            <button type="button" class="payment-tab" data-method="applepay">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.88c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.67-1.09 1.77-.95 2.82 1.04.08 2.07-.5 2.71-1.28z"/></svg>
+                                Apple / Google Pay
+                            </button>
+                            <button type="button" class="payment-tab" data-method="mobile">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                                Mobile Banking
+                            </button>
+                        </div>
+
+                        <!-- Card Form Content -->
+                        <div class="payment-content" id="payment-card-form">
+                            <div class="form-row">
+                                <label class="checkout-label">Card Number</label>
+                                <div class="checkout-input-box card-input-box">
+                                    <input type="text" id="card-number" class="checkout-input" placeholder="4242 &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242" maxlength="19" value="4242 8890 1234 5678">
+                                    <div class="card-brands">
+                                        <span class="card-brand-pill">VISA</span>
+                                        <span class="card-brand-pill">MC</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="form-row">
+                                    <label class="checkout-label">Expiry Date</label>
+                                    <input type="text" id="card-expiry" class="checkout-input" placeholder="MM / YY" maxlength="5" value="12/28">
+                                </div>
+                                <div class="form-row">
+                                    <label class="checkout-label">CVV / CVC</label>
+                                    <input type="password" id="card-cvc" class="checkout-input" placeholder="123" maxlength="4" value="888">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="checkout-label">Cardholder Name</label>
+                                <input type="text" id="card-name" class="checkout-input" placeholder="Full name as printed on card" value="Atiar Osman">
+                            </div>
+                        </div>
+
+                        <!-- PayPal Content -->
+                        <div class="payment-content" id="payment-paypal-content" style="display: none;">
+                            <div class="payment-wallet-box">
+                                <p>You will be connected to PayPal to complete your purchase securely.</p>
+                                <div class="paypal-mock-btn">
+                                    <span style="font-weight: 800; font-style: italic; color: #003087;">Pay</span><span style="font-weight: 800; font-style: italic; color: #0079C1;">Pal</span> Checkout
+                                </div>
+                                <span class="wallet-hint">Account: verified-buyer@example.com</span>
+                            </div>
+                        </div>
+
+                        <!-- Apple / Google Pay Content -->
+                        <div class="payment-content" id="payment-applepay-content" style="display: none;">
+                            <div class="payment-wallet-box">
+                                <p>Fast and private checkout with Apple Pay / Google Pay.</p>
+                                <div class="applepay-mock-btn">
+                                    Pay with <span style="font-weight: 700;">Pay</span>
+                                </div>
+                                <span class="wallet-hint">Default Card: Apple Card ending in 4242</span>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Banking Content -->
+                        <div class="payment-content" id="payment-mobile-content" style="display: none;">
+                            <div class="mobile-banking-options">
+                                <label class="mobile-opt">
+                                    <input type="radio" name="mobile_provider" value="bkash" checked>
+                                    <span class="mobile-opt__box">bKash Fast Pay</span>
+                                </label>
+                                <label class="mobile-opt">
+                                    <input type="radio" name="mobile_provider" value="nagad">
+                                    <span class="mobile-opt__box">Nagad Direct</span>
+                                </label>
+                                <label class="mobile-opt">
+                                    <input type="radio" name="mobile_provider" value="stripe">
+                                    <span class="mobile-opt__box">Stripe Direct</span>
+                                </label>
+                            </div>
+                            <div class="form-row" style="margin-top: 14px;">
+                                <label class="checkout-label">Mobile Number / Wallet ID</label>
+                                <input type="text" class="checkout-input" placeholder="+1 (555) 000-0000" value="+1 (555) 349-2810">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Order Summary -->
+                <div class="checkout-right">
+                    <div class="order-summary-card">
+                        <h2 class="order-summary__title">Order Summary</h2>
+
+                        <div class="summary-line">
+                            <span class="summary-label">Subtotal</span>
+                            <span class="summary-value" id="summary-subtotal">$0</span>
+                        </div>
+
+                        <!-- Promo Code Box -->
+                        <div class="promo-box">
+                            <div class="promo-input-row">
+                                <input type="text" id="promo-input" class="promo-input" placeholder="Promo Code (BYTE20)">
+                                <button type="button" id="apply-promo-btn" class="promo-btn">Apply</button>
+                            </div>
+                            <span class="promo-feedback" id="promo-feedback"></span>
+                        </div>
+
+                        <div class="summary-line discount-line" id="discount-row" style="display: none;">
+                            <span class="summary-label">Discount Applied</span>
+                            <span class="summary-value discount-val" id="summary-discount">-$0</span>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <div class="summary-line total-line">
+                            <span class="total-label">Total Amount</span>
+                            <span class="total-value" id="summary-total">$0</span>
+                        </div>
+
+                        <button type="button" class="btn btn--lime checkout-submit-btn" id="complete-checkout-btn">
+                            Complete Order & Start Learning
+                        </button>
+
+                        <div class="checkout-guarantee">
+                            <div class="guarantee-item">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#242528" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                <span>30-Day Money-Back Guarantee</span>
+                            </div>
+                            <div class="guarantee-item">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#242528" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                <span>Lifetime Course Access</span>
+                            </div>
+                            <div class="guarantee-item">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#242528" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Certificate of Completion Included</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Checkout Success Celebration Modal -->
+    <div class="checkout-modal-backdrop" id="checkout-success-modal" style="display: none;">
+        <div class="checkout-modal-card">
+            <div class="checkout-success-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#003BE2" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+            <h2 class="checkout-modal-title">Payment Successful!</h2>
+            <p class="checkout-modal-desc">
+                Congratulations! You are now enrolled. Your courses are ready in your dashboard.
+            </p>
+            <div class="checkout-receipt-box" id="checkout-receipt-box">
+                <!-- Receipt details injected here -->
+            </div>
+            <div class="checkout-modal-actions">
+                <a href="my-courses.html" class="btn btn--lime" style="width: 100%; text-align: center;">Go to Your Courses</a>
+                <a href="index.html" class="btn btn--outline" style="width: 100%; text-align: center; margin-top: 10px;">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initCheckoutPage === 'function') {
+                initCheckoutPage();
+            }
+        });
+    </script>
+</body>
+</html>
