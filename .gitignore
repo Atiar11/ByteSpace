@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment Variables & Secrets
+.env
+*.env
+atlas-credentials.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.kombai/
+
+# Large binaries / Scratch files
+*.fig
+scratch/
