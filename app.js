@@ -628,18 +628,37 @@ async function handleLogout() {
         console.error(err);
     }
     localStorage.removeItem('bytespace_user');
-    window.location.href = 'login.html';
+    currentUser = null;
+    window.location.href = 'index.html';
 }
 
 /* ============================================================
-   CART SYSTEM (LOCAL STORAGE & CLIENT STATE)
+   CART & USER ENROLLMENT STATE (USER-SCOPED)
    ============================================================ */
 const CART_STORAGE_KEY = 'bytespace_cart';
-const ENROLLED_STORAGE_KEY = 'bytespace_enrolled';
+
+function getActiveUser() {
+    if (currentUser && (currentUser.id || currentUser.email)) return currentUser;
+    try {
+        const stored = localStorage.getItem('bytespace_user');
+        return stored ? JSON.parse(stored) : null;
+    } catch (e) {
+        return null;
+    }
+}
 
 function getLocalEnrolledCourses() {
+    // Purge any legacy global un-scoped key
+    try { localStorage.removeItem('bytespace_enrolled'); } catch (e) {}
+
+    const user = getActiveUser();
+    // Brand new users and guests who are not logged in have ZERO enrolled courses
+    if (!user || (!user.id && !user.email)) {
+        return [];
+    }
+    const userKey = `bytespace_enrolled_${user.id || user.email}`;
     try {
-        const stored = localStorage.getItem(ENROLLED_STORAGE_KEY);
+        const stored = localStorage.getItem(userKey);
         return stored ? JSON.parse(stored) : [];
     } catch (e) {
         return [];
@@ -647,8 +666,11 @@ function getLocalEnrolledCourses() {
 }
 
 function saveLocalEnrolledCourses(courses) {
+    const user = getActiveUser();
+    if (!user || (!user.id && !user.email)) return;
+    const userKey = `bytespace_enrolled_${user.id || user.email}`;
     try {
-        localStorage.setItem(ENROLLED_STORAGE_KEY, JSON.stringify(courses));
+        localStorage.setItem(userKey, JSON.stringify(courses || []));
     } catch (e) {}
 }
 
@@ -1684,6 +1706,15 @@ async function initHomeYourCourses() {
     const isStaticHosting = window.location.hostname.includes('github.io') ||
                             window.location.protocol === 'file:';
 
+    const user = getActiveUser();
+
+    // Guests / visitors who are not logged in have not bought any courses -> Show suggested courses
+    if (!user) {
+        renderSuggested(FALLBACK_CATALOG);
+        return;
+    }
+
+    // Authenticated user: check their own enrolled courses
     const localEnrolled = getLocalEnrolledCourses();
     if (localEnrolled && localEnrolled.length > 0) {
         renderEnrolled(localEnrolled);
@@ -1702,16 +1733,18 @@ async function initHomeYourCourses() {
             if (json.success) {
                 const enrolled = json.data || [];
                 const suggested = (json.suggested && json.suggested.length > 0) ? json.suggested : FALLBACK_CATALOG;
+                saveLocalEnrolledCourses(enrolled);
                 if (enrolled.length > 0) {
-                    saveLocalEnrolledCourses(enrolled);
                     renderEnrolled(enrolled);
-                } else if (localEnrolled.length > 0) {
-                    renderEnrolled(localEnrolled);
                 } else {
                     renderSuggested(suggested);
                 }
                 return;
             }
+        } else if (res.status === 401) {
+            // Unauthenticated on server -> show suggested courses
+            renderSuggested(FALLBACK_CATALOG);
+            return;
         }
     } catch (e) {
         // Fallback
@@ -1823,6 +1856,13 @@ async function initMyCoursesPage() {
     const isStaticHosting = window.location.hostname.includes('github.io') ||
                             window.location.protocol === 'file:';
 
+    const user = getActiveUser();
+    if (!user) {
+        renderMyCourses([], FALLBACK_CATALOG);
+        if (spinner) spinner.style.display = 'none';
+        return;
+    }
+
     const localEnrolled = getLocalEnrolledCourses();
     renderMyCourses(localEnrolled, FALLBACK_CATALOG);
 
@@ -1838,16 +1878,14 @@ async function initMyCoursesPage() {
             if (json.success) {
                 const enrolled = json.data || [];
                 const suggested = json.suggested;
-                if (enrolled.length > 0) {
-                    saveLocalEnrolledCourses(enrolled);
-                    renderMyCourses(enrolled, suggested);
-                } else if (localEnrolled.length > 0) {
-                    renderMyCourses(localEnrolled, suggested);
-                } else {
-                    renderMyCourses([], suggested);
-                }
+                saveLocalEnrolledCourses(enrolled);
+                renderMyCourses(enrolled, suggested);
                 return;
             }
+        } else if (res.status === 401) {
+            saveLocalEnrolledCourses([]);
+            renderMyCourses([], FALLBACK_CATALOG);
+            return;
         }
     } catch (err) {
         console.warn('API fetch failed, falling back to local storage:', err);
@@ -1954,6 +1992,18 @@ function initCheckoutPage() {
         }
 
         const completeCheckoutSuccess = (enrolledItems) => {
+            let user = getActiveUser();
+            if (!user) {
+                user = {
+                    id: 'student_' + Date.now().toString().slice(-6),
+                    name: 'Student',
+                    email: 'student@example.com'
+                };
+                localStorage.setItem('bytespace_user', JSON.stringify(user));
+                currentUser = user;
+                renderUserHeader(user);
+            }
+
             const currentEnrolled = getLocalEnrolledCourses();
             const newEnrolled = [...currentEnrolled];
             
