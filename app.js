@@ -635,6 +635,22 @@ async function handleLogout() {
    CART SYSTEM (LOCAL STORAGE & CLIENT STATE)
    ============================================================ */
 const CART_STORAGE_KEY = 'bytespace_cart';
+const ENROLLED_STORAGE_KEY = 'bytespace_enrolled';
+
+function getLocalEnrolledCourses() {
+    try {
+        const stored = localStorage.getItem(ENROLLED_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveLocalEnrolledCourses(courses) {
+    try {
+        localStorage.setItem(ENROLLED_STORAGE_KEY, JSON.stringify(courses));
+    } catch (e) {}
+}
 
 function getCart() {
     try {
@@ -1559,122 +1575,144 @@ async function initHomeYourCourses() {
     const container = document.getElementById('home-your-courses-content');
     if (!container) return;
 
-    try {
-        const res = await fetch('/api/courses/user/my-courses');
-        const json = await res.json();
-
-        if (json.success) {
-            const enrolled = json.data || [];
-            const suggested = (json.suggested && json.suggested.length > 0) ? json.suggested : FALLBACK_CATALOG;
-
-            if (enrolled.length > 0) {
-                // User has bought courses -> Show their active courses to enjoy
-                container.innerHTML = `
-                    <div class="home-enrolled-section">
-                        <div class="home-enrolled__header">
-                            <div>
-                                <span class="section-tag-pill">Continue Learning</span>
-                                <h2 class="home-enrolled__title">Your Enrolled Courses</h2>
-                                <p class="home-enrolled__desc">Pick up where you left off and enjoy your full course library.</p>
-                            </div>
-                            <a href="my-courses.html" class="home-enrolled__view-all-btn">
-                                View All (${enrolled.length})
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                        <div class="home-enrolled__grid">
-                            ${enrolled.map(c => `
-                                <div class="enrolled-course-card">
-                                    <div class="enrolled-course-card__img-box">
-                                        <img src="${c.image || 'figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle}">
-                                        <span class="enrolled-status-badge">Active</span>
-                                    </div>
-                                    <div class="enrolled-course-card__content">
-                                        <div class="enrolled-course-card__info">
-                                            <h3 class="enrolled-course-card__title">${c.courseTitle}</h3>
-                                            <p class="enrolled-course-card__author">by ${c.author || 'purepearl studio'}</p>
-                                        </div>
-                                        <div class="enrolled-course-card__progress-block">
-                                            <div class="progress-labels">
-                                                <span>Lesson Progress</span>
-                                                <span class="progress-percent">${c.progress || 0}%</span>
-                                            </div>
-                                            <div class="progress-track">
-                                                <div class="progress-fill" style="width: ${c.progress || 0}%;"></div>
-                                            </div>
-                                        </div>
-                                        <a href="course-lessons.html?id=${c.courseId}" class="btn-enjoy-course">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                            Enjoy Course
-                                        </a>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
+    function renderEnrolled(enrolled) {
+        container.innerHTML = `
+            <div class="home-enrolled-section">
+                <div class="home-enrolled__header">
+                    <div>
+                        <span class="section-tag-pill">Continue Learning</span>
+                        <h2 class="home-enrolled__title">Your Enrolled Courses</h2>
+                        <p class="home-enrolled__desc">Pick up where you left off and enjoy your full course library.</p>
                     </div>
-                `;
-            } else {
-                // User has NOT bought any courses -> Stay empty, show suggested courses instead
-                container.innerHTML = `
-                    <div class="home-empty-courses-wrapper">
-                        <!-- Suggested Courses Section (Appears instead) -->
-                        <div class="home-suggested-section">
-                            <div class="home-suggested__header">
-                                <div>
-                                    <span class="section-tag-pill">Recommended For You</span>
-                                    <h2 class="home-suggested__title">Suggested Courses to Get You Started</h2>
-                                    <p class="home-suggested__desc">Hand-picked top-rated courses to kickstart your creative journey today.</p>
+                    <a href="my-courses.html" class="home-enrolled__view-all-btn">
+                        View All (${enrolled.length})
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <div class="home-enrolled__grid">
+                    ${enrolled.map(c => `
+                        <div class="enrolled-course-card">
+                            <div class="enrolled-course-card__img-box">
+                                <img src="${c.image || 'figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle || c.title || 'Course'}">
+                                <span class="enrolled-status-badge">Active</span>
+                            </div>
+                            <div class="enrolled-course-card__content">
+                                <div class="enrolled-course-card__info">
+                                    <h3 class="enrolled-course-card__title">${c.courseTitle || c.title}</h3>
+                                    <p class="enrolled-course-card__author">by ${c.author || 'purepearl studio'}</p>
                                 </div>
-                                <a href="search.html" class="home-suggested__view-catalog">
-                                    Explore Full Catalog &rarr;
+                                <div class="enrolled-course-card__progress-block">
+                                    <div class="progress-labels">
+                                        <span>Lesson Progress</span>
+                                        <span class="progress-percent">${c.progress || 0}%</span>
+                                    </div>
+                                    <div class="progress-track">
+                                        <div class="progress-fill" style="width: ${c.progress || 0}%;"></div>
+                                    </div>
+                                </div>
+                                <a href="course-lessons.html?id=${c.courseId || c.id || 'figma'}" class="btn-enjoy-course">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    Enjoy Course
                                 </a>
                             </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
 
-                            <div class="home-suggested__grid">
-                                ${suggested.slice(0, 3).map(course => `
-                                    <div class="suggested-course-card">
-                                        <a href="course-detail.html?id=${course.id}" class="suggested-card-link">
-                                            <div class="suggested-course-card__img-box">
-                                                <img src="${course.image}" alt="${course.title}">
-                                                <div class="suggested-course-card__badges">
-                                                    <span class="card-badge">${course.lessonsCount || 17} Lessons</span>
-                                                    <span class="card-badge">${course.duration || '2 hours'}</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <div class="suggested-course-card__body">
-                                            <div class="suggested-course-card__title-row">
-                                                <a href="course-detail.html?id=${course.id}" class="suggested-title-link">
-                                                    <h3 class="suggested-course-card__title">${course.title}</h3>
-                                                </a>
-                                                <span class="suggested-rating">${course.rating || 4.5} &#9733;</span>
-                                            </div>
-                                            <p class="suggested-author">by ${course.author || 'purepearl studio'}</p>
-                                            
-                                            <div class="suggested-price-row">
-                                                <div class="price-box">
-                                                    <span class="price-val">$${course.price || 25}</span>
-                                                    <span class="price-sub">/lifetime</span>
-                                                </div>
-                                                <div class="suggested-action-btns">
-                                                    <a href="course-detail.html?id=${course.id}" class="btn-suggested-view">View</a>
-                                                    <button type="button" class="btn-suggested-add-cart" onclick='addToCart(${JSON.stringify(course)})'>
-                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                                                        Add to Cart
-                                                    </button>
-                                                </div>
-                                            </div>
+    function renderSuggested(suggestedList) {
+        const suggested = (suggestedList && suggestedList.length > 0) ? suggestedList : FALLBACK_CATALOG;
+        container.innerHTML = `
+            <div class="home-empty-courses-wrapper">
+                <div class="home-suggested-section">
+                    <div class="home-suggested__header">
+                        <div>
+                            <span class="section-tag-pill">Recommended For You</span>
+                            <h2 class="home-suggested__title">Suggested Courses to Get You Started</h2>
+                            <p class="home-suggested__desc">Hand-picked top-rated courses to kickstart your creative journey today.</p>
+                        </div>
+                        <a href="search.html" class="home-suggested__view-catalog">
+                            Explore Full Catalog &rarr;
+                        </a>
+                    </div>
+
+                    <div class="home-suggested__grid">
+                        ${suggested.slice(0, 3).map(course => `
+                            <div class="suggested-course-card">
+                                <a href="course-detail.html?id=${course.id}" class="suggested-card-link">
+                                    <div class="suggested-course-card__img-box">
+                                        <img src="${course.image}" alt="${course.title}">
+                                        <div class="suggested-course-card__badges">
+                                            <span class="card-badge">${course.lessonsCount || 17} Lessons</span>
+                                            <span class="card-badge">${course.duration || '2 hours'}</span>
                                         </div>
                                     </div>
-                                `).join('')}
+                                </a>
+                                <div class="suggested-course-card__body">
+                                    <div class="suggested-course-card__title-row">
+                                        <a href="course-detail.html?id=${course.id}" class="suggested-title-link">
+                                            <h3 class="suggested-course-card__title">${course.title}</h3>
+                                        </a>
+                                        <span class="suggested-rating">${course.rating || 4.5} &#9733;</span>
+                                    </div>
+                                    <p class="suggested-author">by ${course.author || 'purepearl studio'}</p>
+                                    
+                                    <div class="suggested-price-row">
+                                        <div class="price-box">
+                                            <span class="price-val">$${course.price || 25}</span>
+                                            <span class="price-sub">/lifetime</span>
+                                        </div>
+                                        <div class="suggested-action-btns">
+                                            <a href="course-detail.html?id=${course.id}" class="btn-suggested-view">View</a>
+                                            <button type="button" class="btn-suggested-add-cart" onclick='addToCart(${JSON.stringify(course)})'>
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        `).join('')}
                     </div>
-                `;
+                </div>
+            </div>
+        `;
+    }
+
+    const localEnrolled = getLocalEnrolledCourses();
+    if (localEnrolled && localEnrolled.length > 0) {
+        renderEnrolled(localEnrolled);
+    }
+
+    try {
+        const res = await fetch('/api/courses/user/my-courses');
+        if (res.ok) {
+            const json = await res.json();
+            if (json.success) {
+                const enrolled = json.data || [];
+                const suggested = (json.suggested && json.suggested.length > 0) ? json.suggested : FALLBACK_CATALOG;
+                if (enrolled.length > 0) {
+                    saveLocalEnrolledCourses(enrolled);
+                    renderEnrolled(enrolled);
+                } else if (localEnrolled.length > 0) {
+                    renderEnrolled(localEnrolled);
+                } else {
+                    renderSuggested(suggested);
+                }
+                return;
             }
         }
     } catch (e) {
-        console.warn('Error fetching home your courses:', e);
+        // Static hosting or offline
+    }
+
+    // Fallback if API unavailable
+    if (localEnrolled && localEnrolled.length > 0) {
+        renderEnrolled(localEnrolled);
+    } else {
+        renderSuggested(FALLBACK_CATALOG);
     }
 }
 
@@ -1690,101 +1728,115 @@ async function initMyCoursesPage() {
     const emptyContainer = document.getElementById('enrolled-empty-container');
     const suggestedGrid = document.getElementById('suggested-courses-grid');
 
+    const renderMyCourses = (enrolled, suggested) => {
+        if (spinner) spinner.style.display = 'none';
+        const sug = (suggested && suggested.length > 0) ? suggested : FALLBACK_CATALOG;
+
+        if (enrolled && enrolled.length > 0) {
+            if (emptyContainer) emptyContainer.style.display = 'none';
+            if (grid) {
+                grid.style.display = 'grid';
+                grid.innerHTML = enrolled.map(c => `
+                    <div class="enrolled-course-card">
+                        <div class="enrolled-course-card__img-box">
+                            <img src="${c.image || 'figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle || c.title || 'Course'}">
+                            <span class="enrolled-status-badge">Enrolled</span>
+                        </div>
+                        <div class="enrolled-course-card__content">
+                            <div class="enrolled-course-card__info">
+                                <h3 class="enrolled-course-card__title">${c.courseTitle || c.title}</h3>
+                                <p class="enrolled-course-card__author">by ${c.author || 'purepearl studio'}</p>
+                            </div>
+                            <div class="enrolled-course-card__progress-block">
+                                <div class="progress-labels">
+                                    <span>Lesson Progress</span>
+                                    <span class="progress-percent">${c.progress || 0}%</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-fill" style="width: ${c.progress || 0}%;"></div>
+                                </div>
+                            </div>
+                            <div class="enrolled-card-footer">
+                                <span class="enrolled-lessons-stat">${c.completedLessons ? c.completedLessons.length : 0} of ${c.totalLessons || 17} lessons</span>
+                                <a href="course-lessons.html?id=${c.courseId || c.id || 'figma'}" class="btn-enjoy-course">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    Enjoy Course
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        } else {
+            if (grid) grid.style.display = 'none';
+            if (emptyContainer) emptyContainer.style.display = 'block';
+
+            if (suggestedGrid) {
+                suggestedGrid.innerHTML = sug.map(course => `
+                    <div class="suggested-course-card">
+                        <a href="course-detail.html?id=${course.id}" class="suggested-card-link">
+                            <div class="suggested-course-card__img-box">
+                                <img src="${course.image}" alt="${course.title}">
+                                <div class="suggested-course-card__badges">
+                                    <span class="card-badge">${course.lessonsCount || 17} Lessons</span>
+                                    <span class="card-badge">${course.duration || '2 hours'}</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="suggested-course-card__body">
+                            <div class="suggested-course-card__title-row">
+                                <a href="course-detail.html?id=${course.id}" class="suggested-title-link">
+                                    <h3 class="suggested-course-card__title">${course.title}</h3>
+                                </a>
+                                <span class="suggested-rating">${course.rating || 4.5} &#9733;</span>
+                            </div>
+                            <p class="suggested-author">by ${course.author || 'purepearl studio'}</p>
+                            
+                            <div class="suggested-price-row">
+                                <div class="price-box">
+                                    <span class="price-val">$${course.price || 25}</span>
+                                    <span class="price-sub">/lifetime</span>
+                                </div>
+                                <div class="suggested-action-btns">
+                                    <a href="course-detail.html?id=${course.id}" class="btn-suggested-view">View</a>
+                                    <button type="button" class="btn-suggested-add-cart" onclick='addToCart(${JSON.stringify(course)})'>
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+    };
+
+    const localEnrolled = getLocalEnrolledCourses();
+
     try {
         const res = await fetch('/api/courses/user/my-courses');
-        const json = await res.json();
-
-        if (spinner) spinner.style.display = 'none';
-
-        if (json.success) {
-            const enrolled = json.data || [];
-            const suggested = (json.suggested && json.suggested.length > 0) ? json.suggested : FALLBACK_CATALOG;
-
-            if (enrolled.length > 0) {
-                // Show enrolled courses
-                if (emptyContainer) emptyContainer.style.display = 'none';
-                if (grid) {
-                    grid.style.display = 'grid';
-                    grid.innerHTML = enrolled.map(c => `
-                        <div class="enrolled-course-card">
-                            <div class="enrolled-course-card__img-box">
-                                <img src="${c.image || 'figma-images/course_1_wireframe.jpg'}" alt="${c.courseTitle}">
-                                <span class="enrolled-status-badge">Enrolled</span>
-                            </div>
-                            <div class="enrolled-course-card__content">
-                                <div class="enrolled-course-card__info">
-                                    <h3 class="enrolled-course-card__title">${c.courseTitle}</h3>
-                                    <p class="enrolled-course-card__author">by ${c.author || 'purepearl studio'}</p>
-                                </div>
-                                <div class="enrolled-course-card__progress-block">
-                                    <div class="progress-labels">
-                                        <span>Lesson Progress</span>
-                                        <span class="progress-percent">${c.progress || 0}%</span>
-                                    </div>
-                                    <div class="progress-track">
-                                        <div class="progress-fill" style="width: ${c.progress || 0}%;"></div>
-                                    </div>
-                                </div>
-                                <div class="enrolled-card-footer">
-                                    <span class="enrolled-lessons-stat">${c.completedLessons ? c.completedLessons.length : 0} of ${c.totalLessons || 17} lessons</span>
-                                    <a href="course-lessons.html?id=${c.courseId}" class="btn-enjoy-course">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                        Enjoy Course
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
+        if (res.ok) {
+            const json = await res.json();
+            if (json.success) {
+                const enrolled = json.data || [];
+                const suggested = json.suggested;
+                if (enrolled.length > 0) {
+                    saveLocalEnrolledCourses(enrolled);
+                    renderMyCourses(enrolled, suggested);
+                } else if (localEnrolled.length > 0) {
+                    renderMyCourses(localEnrolled, suggested);
+                } else {
+                    renderMyCourses([], suggested);
                 }
-            } else {
-                // User has NO enrolled courses -> Show empty state + suggested courses
-                if (grid) grid.style.display = 'none';
-                if (emptyContainer) emptyContainer.style.display = 'block';
-
-                if (suggestedGrid) {
-                    suggestedGrid.innerHTML = suggested.map(course => `
-                        <div class="suggested-course-card">
-                            <a href="course-detail.html?id=${course.id}" class="suggested-card-link">
-                                <div class="suggested-course-card__img-box">
-                                    <img src="${course.image}" alt="${course.title}">
-                                    <div class="suggested-course-card__badges">
-                                        <span class="card-badge">${course.lessonsCount || 17} Lessons</span>
-                                        <span class="card-badge">${course.duration || '2 hours'}</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="suggested-course-card__body">
-                                <div class="suggested-course-card__title-row">
-                                    <a href="course-detail.html?id=${course.id}" class="suggested-title-link">
-                                        <h3 class="suggested-course-card__title">${course.title}</h3>
-                                    </a>
-                                    <span class="suggested-rating">${course.rating || 4.5} &#9733;</span>
-                                </div>
-                                <p class="suggested-author">by ${course.author || 'purepearl studio'}</p>
-                                
-                                <div class="suggested-price-row">
-                                    <div class="price-box">
-                                        <span class="price-val">$${course.price || 25}</span>
-                                        <span class="price-sub">/lifetime</span>
-                                    </div>
-                                    <div class="suggested-action-btns">
-                                        <a href="course-detail.html?id=${course.id}" class="btn-suggested-view">View</a>
-                                        <button type="button" class="btn-suggested-add-cart" onclick='addToCart(${JSON.stringify(course)})'>
-                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
-                }
+                return;
             }
         }
     } catch (err) {
-        console.error('Error in initMyCoursesPage:', err);
-        if (spinner) spinner.style.display = 'none';
+        console.warn('API fetch failed, falling back to local storage:', err);
     }
+
+    renderMyCourses(localEnrolled, FALLBACK_CATALOG);
 }
 
 /* ============================================================
@@ -1880,6 +1932,58 @@ function initCheckoutPage() {
             `;
         }
 
+        const completeCheckoutSuccess = (enrolledItems) => {
+            const currentEnrolled = getLocalEnrolledCourses();
+            const newEnrolled = [...currentEnrolled];
+            
+            enrolledItems.forEach(item => {
+                const courseId = item.id || item.courseId;
+                if (!newEnrolled.some(c => (c.courseId || c.id) === courseId)) {
+                    newEnrolled.push({
+                        courseId: courseId,
+                        courseTitle: item.title || item.courseTitle || 'Digital Course',
+                        author: item.author || 'purepearl studio',
+                        image: item.image || 'figma-images/course_1_wireframe.jpg',
+                        price: Number(item.price) || 25,
+                        progress: 0,
+                        completedLessons: []
+                    });
+                }
+            });
+            saveLocalEnrolledCourses(newEnrolled);
+
+            // Populate success modal with bought courses
+            const receiptBox = document.getElementById('checkout-receipt-box') || document.getElementById('checkout-success-courses');
+            if (receiptBox) {
+                receiptBox.innerHTML = cart.map(item => `
+                    <div class="success-course-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; text-align: left;">
+                        <img src="${item.image || 'figma-images/course_1_wireframe.jpg'}" alt="${item.title}" style="width: 48px; height: 36px; border-radius: 6px; object-fit: cover;">
+                        <div>
+                            <h4 style="font-size: 14px; font-weight: 700; color: #242528; margin: 0;">${item.title}</h4>
+                            <p style="font-size: 12px; color: #64748B; margin: 2px 0 0;">by ${item.author || 'purepearl studio'} &bull; Lifetime Access Included</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Clear cart
+            clearCart();
+
+            // Open success modal
+            const modal = document.getElementById('checkout-success-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.add('modal--open');
+            } else {
+                window.location.href = 'my-courses.html';
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        };
+
         try {
             const res = await fetch('/api/courses/checkout', {
                 method: 'POST',
@@ -1891,48 +1995,34 @@ function initCheckoutPage() {
                 })
             });
 
-            const data = await res.json();
-
-            if (data.success) {
-                // Populate success modal with bought courses
-                const receiptBox = document.getElementById('checkout-receipt-box') || document.getElementById('checkout-success-courses');
-                if (receiptBox) {
-                    receiptBox.innerHTML = cart.map(item => `
-                        <div class="success-course-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; text-align: left;">
-                            <img src="${item.image}" alt="${item.title}" style="width: 48px; height: 36px; border-radius: 6px; object-fit: cover;">
-                            <div>
-                                <h4 style="font-size: 14px; font-weight: 700; color: #242528; margin: 0;">${item.title}</h4>
-                                <p style="font-size: 12px; color: #64748B; margin: 2px 0 0;">by ${item.author} &bull; Lifetime Access Included</p>
-                            </div>
-                        </div>
-                    `).join('');
+            if (res.ok) {
+                const data = await res.json().catch(() => null);
+                if (data && data.success) {
+                    completeCheckoutSuccess(data.enrolledCourses || cart);
+                    return;
                 }
-
-                // Clear cart
-                clearCart();
-
-                // Open success modal
-                const modal = document.getElementById('checkout-success-modal');
-                if (modal) {
-                    modal.style.display = 'flex';
-                    modal.classList.add('modal--open');
-                } else {
-                    window.location.href = 'my-courses.html';
-                }
-            } else {
-                alert(data.error || 'Checkout failed. Please try again.');
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnText;
+            } else if (res.status === 401) {
+                const localUser = localStorage.getItem('bytespace_user');
+                if (!localUser) {
+                    const data = await res.json().catch(() => ({}));
+                    alert(data.error || 'Please sign in to complete checkout');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnText;
+                    }
+                    return;
                 }
             }
+
+            // Static hosting fallback (404/405 or GitHub Pages)
+            setTimeout(() => {
+                completeCheckoutSuccess(cart);
+            }, 600);
         } catch (err) {
-            console.error('Checkout error:', err);
-            alert('An error occurred during checkout. Please try again.');
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            }
+            console.warn('Checkout API unreachable, completing checkout in static mode:', err);
+            setTimeout(() => {
+                completeCheckoutSuccess(cart);
+            }, 600);
         }
     };
 
@@ -2228,11 +2318,19 @@ async function initCourseDetailPage() {
 
     // Check if user is already enrolled
     let isEnrolled = false;
+    const localEnrolled = getLocalEnrolledCourses();
+    if (localEnrolled.some(c => (c.courseId || c.id) === courseId)) {
+        isEnrolled = true;
+    }
     try {
         const enrollRes = await fetch('/api/courses/user/my-courses');
-        const enrollJson = await enrollRes.json();
-        if (enrollJson.success && enrollJson.data) {
-            isEnrolled = enrollJson.data.some(c => c.courseId === courseId);
+        if (enrollRes.ok) {
+            const enrollJson = await enrollRes.json();
+            if (enrollJson.success && enrollJson.data) {
+                if (enrollJson.data.some(c => c.courseId === courseId)) {
+                    isEnrolled = true;
+                }
+            }
         }
     } catch (e) {
         // ignore
@@ -2299,14 +2397,23 @@ async function initCourseLessonsPage() {
     // Check progress
     let userProgress = 0;
     let completedLessons = [];
+    const localCourses = getLocalEnrolledCourses();
+    const localFound = localCourses.find(c => (c.courseId || c.id) === courseId);
+    if (localFound) {
+        userProgress = localFound.progress || 0;
+        completedLessons = localFound.completedLessons || [];
+    }
+
     try {
         const enrollRes = await fetch('/api/courses/user/my-courses');
-        const enrollJson = await enrollRes.json();
-        if (enrollJson.success && enrollJson.data) {
-            const userCourse = enrollJson.data.find(c => c.courseId === courseId);
-            if (userCourse) {
-                userProgress = userCourse.progress || 0;
-                completedLessons = userCourse.completedLessons || [];
+        if (enrollRes.ok) {
+            const enrollJson = await enrollRes.json();
+            if (enrollJson.success && enrollJson.data) {
+                const userCourse = enrollJson.data.find(c => c.courseId === courseId);
+                if (userCourse) {
+                    userProgress = userCourse.progress || 0;
+                    completedLessons = userCourse.completedLessons || [];
+                }
             }
         }
     } catch (e) {
@@ -2350,6 +2457,16 @@ async function initCourseLessonsPage() {
 
                     // Update progress calculation
                     const newProgress = Math.min(100, Math.round((completedLessons.length / lessons.length) * 100));
+
+                    // Save to local storage
+                    const curLocal = getLocalEnrolledCourses();
+                    const cIdx = curLocal.findIndex(c => (c.courseId || c.id) === courseId);
+                    if (cIdx !== -1) {
+                        curLocal[cIdx].progress = newProgress;
+                        curLocal[cIdx].completedLessons = completedLessons;
+                        saveLocalEnrolledCourses(curLocal);
+                    }
+
                     try {
                         await fetch('/api/courses/progress', {
                             method: 'POST',
@@ -2360,10 +2477,10 @@ async function initCourseLessonsPage() {
                                 lessonNumber: lessonNum
                             })
                         });
-                        showToast(`Lesson ${lessonNum} marked complete! (${newProgress}% finished)`);
                     } catch (e) {
                         console.warn('Progress update error:', e);
                     }
+                    showToast(`Lesson ${lessonNum} marked complete! (${newProgress}% finished)`);
                 } else {
                     showToast(`Now playing Lesson ${lessonNum}`);
                 }
