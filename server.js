@@ -67,9 +67,13 @@ function connectMongoDB() {
     });
 }
 
-const server = app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+if (!process.env.VERCEL) {
+    const server = app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        connectMongoDB();
+    });
+} else {
     connectMongoDB();
-});
+}
 
 module.exports = app;
