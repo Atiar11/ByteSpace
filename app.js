@@ -1681,9 +1681,18 @@ async function initHomeYourCourses() {
         `;
     }
 
+    const isStaticHosting = window.location.hostname.includes('github.io') ||
+                            window.location.protocol === 'file:';
+
     const localEnrolled = getLocalEnrolledCourses();
     if (localEnrolled && localEnrolled.length > 0) {
         renderEnrolled(localEnrolled);
+    } else {
+        renderSuggested(FALLBACK_CATALOG);
+    }
+
+    if (isStaticHosting) {
+        return;
     }
 
     try {
@@ -1705,10 +1714,9 @@ async function initHomeYourCourses() {
             }
         }
     } catch (e) {
-        // Static hosting or offline
+        // Fallback
     }
 
-    // Fallback if API unavailable
     if (localEnrolled && localEnrolled.length > 0) {
         renderEnrolled(localEnrolled);
     } else {
@@ -1812,7 +1820,16 @@ async function initMyCoursesPage() {
         }
     };
 
+    const isStaticHosting = window.location.hostname.includes('github.io') ||
+                            window.location.protocol === 'file:';
+
     const localEnrolled = getLocalEnrolledCourses();
+    renderMyCourses(localEnrolled, FALLBACK_CATALOG);
+
+    if (isStaticHosting) {
+        if (spinner) spinner.style.display = 'none';
+        return;
+    }
 
     try {
         const res = await fetch('/api/courses/user/my-courses');
@@ -1844,9 +1861,13 @@ async function initMyCoursesPage() {
    ============================================================ */
 let currentAppliedDiscount = 0; // percentage, e.g. 0.20
 
+let checkoutPageInitialized = false;
+
 function initCheckoutPage() {
+    if (checkoutPageInitialized) return;
     const checkoutList = document.getElementById('checkout-cart-list');
     if (!checkoutList) return;
+    checkoutPageInitialized = true;
 
     renderCheckoutCart();
 
@@ -1984,6 +2005,16 @@ function initCheckoutPage() {
             }
         };
 
+        const isStaticHosting = window.location.hostname.includes('github.io') ||
+                                window.location.protocol === 'file:';
+
+        if (isStaticHosting) {
+            setTimeout(() => {
+                completeCheckoutSuccess(cart);
+            }, 600);
+            return;
+        }
+
         try {
             const res = await fetch('/api/courses/checkout', {
                 method: 'POST',
@@ -2014,12 +2045,12 @@ function initCheckoutPage() {
                 }
             }
 
-            // Static hosting fallback (404/405 or GitHub Pages)
+            // Fallback
             setTimeout(() => {
                 completeCheckoutSuccess(cart);
             }, 600);
         } catch (err) {
-            console.warn('Checkout API unreachable, completing checkout in static mode:', err);
+            console.warn('Checkout API unreachable, completing checkout in fallback mode:', err);
             setTimeout(() => {
                 completeCheckoutSuccess(cart);
             }, 600);
