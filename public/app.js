@@ -600,11 +600,12 @@ async function checkAuthStatus() {
             if (data.success && data.data) {
                 localStorage.setItem('bytespace_user', JSON.stringify(data.data));
                 renderUserHeader(data.data);
-                if (isAuthPage && !window.location.pathname.includes('forgot') && !window.location.pathname.includes('reset')) {
-                    window.location.href = 'index.html';
-                }
                 return;
             }
+        } else if (res.status === 401) {
+            // Server explicitly rejected token -> clear stale localUser on localhost
+            localStorage.removeItem('bytespace_user');
+            localUser = null;
         }
     } catch (err) {
         // Static hosting fallback (e.g. GitHub Pages)
@@ -612,9 +613,6 @@ async function checkAuthStatus() {
 
     if (localUser) {
         renderUserHeader(localUser);
-        if (isAuthPage && !window.location.pathname.includes('forgot') && !window.location.pathname.includes('reset')) {
-            window.location.href = 'index.html';
-        }
     } else {
         currentUser = null;
         if (isProtectedPage) {

@@ -23,34 +23,19 @@ app.use(cookieParser());
 // Enable CORS
 app.use(cors());
 
-// Auth & Access Control
-// Redirect to login.html if not authenticated when opening root, index.html, my-courses.html, etc.
-app.get(['/', '/index.html', '/my-courses.html', '/cart.html', '/course-lessons.html'], (req, res, next) => {
+// Protected member routes: redirect to login if not authenticated
+app.get(['/my-courses.html', '/course-lessons.html'], (req, res, next) => {
     const token = req.cookies?.token;
     if (!token || token === 'none') {
         return res.redirect('/login.html');
     }
     try {
         jwt.verify(token, process.env.JWT_SECRET || 'bytespacesecretkey123');
-        const filename = req.path === '/' ? 'index.html' : req.path.replace(/^\//, '');
+        const filename = req.path.replace(/^\//, '');
         return res.sendFile(path.join(__dirname, 'public', filename));
     } catch (e) {
         return res.redirect('/login.html');
     }
-});
-
-// If already authenticated and visiting login or register, redirect to index.html
-app.get(['/login.html', '/register.html'], (req, res, next) => {
-    const token = req.cookies?.token;
-    if (token && token !== 'none') {
-        try {
-            jwt.verify(token, process.env.JWT_SECRET || 'bytespacesecretkey123');
-            return res.redirect('/index.html');
-        } catch (e) {
-            // token invalid, proceed to login/register
-        }
-    }
-    next();
 });
 
 // Static assets
