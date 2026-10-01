@@ -88,5 +88,25 @@
     "email": "newuser@example.com",
     "password": "$2b$10$FOtNTdnelZ5bngwXHk.qM.f.lUaCXs3fJ2zLFsQ4k7TrimXDg3t3q",
     "createdAt": "2026-09-30T22:38:58.201Z"
+  },
+  {
+    "id": "1790859387784",
+    "_id": "1790859387784",
+    "name": "Joe",
+    "email": "joe69@gmail.com",
+    "password": "$2b$10$eNnQ5unCeUlWtZZ6r.WR2.iBJsE7Q/RI6eQ2lTsTtr/beUNcb60MK",
+    "createdAt": "2026-10-01T12:56:27.784Z",
+    "enrolledCourses": [
+      {
+        "courseId": "digital-asset",
+        "courseTitle": "Build Digital Asset",
+        "author": "purepearl studio",
+        "image": "/figma-images/course_2_icons.jpg",
+        "price": 25,
+        "progress": 0,
+        "completedLessons": [],
+        "enrolledAt": "2026-10-01T12:57:02.316Z"
+      }
+    ]
   }
 ]
