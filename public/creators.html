@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PurePearl Studio — Creator Profile | ByteSpace</title>
+    <meta name="description"
+        content="Welcome to the creative world of PurePearl Studio. Passionate UI/UX and web designer creating world-class courses on ByteSpace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header header--dark" id="main-header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo" id="header-logo">
+                <svg class="header__logo-icon" width="29" height="32" viewBox="0 0 29 32" fill="none">
+                    <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20" />
+                </svg>
+                <span class="header__logo-text">ByteSpace</span>
+            </a>
+            <nav class="header__nav" id="header-nav">
+                <a href="index.html" class="header__nav-link">Home</a>
+                <a href="search.html" class="header__nav-link">Courses</a>
+                <a href="creators.html" class="header__nav-link header__nav-link--active">Creators</a>
+            </nav>
+            <div class="header__actions" id="header-actions">
+                <a href="login.html" class="header__action-link">Sign In</a>
+                <a href="register.html" class="header__action-link">Join Us</a>
+                <button class="header__cart-btn" id="header-cart" aria-label="Shopping cart"
+                    style="position: relative;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    <span class="cart-badge-count" id="header-cart-badge"
+                        style="display: none; position: absolute; top: -4px; right: -4px; background: #D4FB20; color: #242528; border-radius: 50%; font-size: 11px; font-weight: 700; width: 18px; height: 18px; line-height: 18px; text-align: center;">0</span>
+                </button>
+            </div>
+            <button class="header__mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Creator Hero Section with blue grid background -->
+    <section class="creator-hero" id="creator-hero">
+        <div class="creator-hero__container">
+            <!-- Profile Info: Avatar, Name, Creator Badge, Role -->
+            <div class="creator-hero__profile">
+                <img src="/figma-images/b44979e1c98ecb3ec92ac86805fe55581fbeaa60.png" alt="PurePearl Studio"
+                    class="creator-hero__avatar" id="creator-avatar">
+                <div class="creator-hero__info">
+                    <div class="creator-hero__title-row">
+                        <h1 class="creator-hero__name" id="creator-name">PurePearl Studio</h1>
+                        <span class="creator-hero__badge">Creator</span>
+                    </div>
+                    <p class="creator-hero__subtitle" id="creator-subtitle">Passionate UI/UX, Web designer</p>
+                </div>
+            </div>
+
+            <!-- Bio text matching exact screenshot and Figma specification -->
+            <p class="creator-hero__bio" id="creator-bio">Welcome to the creative world of John Lenon. Here, you'll
+                discover the passion, expertise, and inspiration that drive my creative journey. Let's explore and learn
+                together!
+                I have into my creative portfolio, showcasing a glimpse of my artistic endeavors. From digital designs
+                to multimedia projects, each piece tells a unique story. Explore the world of creativity with me.</p>
+
+            <!-- Stats and Follow Button Row -->
+            <div class="creator-hero__stats-row">
+                <div class="creator-hero__stats-group">
+                    <div class="creator-hero__pill" id="products-pill">
+                        <span class="creator-hero__pill-num" id="creator-products-count">3</span>
+                        <span class="creator-hero__pill-label">Products</span>
+                    </div>
+                    <div class="creator-hero__pill" id="followers-pill">
+                        <span class="creator-hero__pill-num" id="creator-followers-count">12</span>
+                        <span class="creator-hero__pill-label">Followers</span>
+                    </div>
+                </div>
+                <button class="creator-hero__follow-btn" id="creator-follow-btn" type="button">Follow</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creator Content Section: Filter Bar & Courses Grid -->
+    <section class="creator-content" id="creator-content">
+        <div class="creator-content__container">
+            <!-- Filter Bar -->
+            <div class="creator-filter-bar">
+                <div class="creator-filter-bar__left">
+                    <div style="position: relative;">
+                        <button class="creator-filter-btn" id="filter-btn" type="button"
+                            aria-label="Toggle all filters">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
+                            <span>Filter</span>
+                        </button>
+                    </div>
+
+                    <div style="position: relative;">
+                        <button class="creator-filter-btn" id="level-btn" type="button" aria-label="Filter by level">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="16"></line>
+                                <line x1="12" y1="20" x2="12" y2="10"></line>
+                            </svg>
+                            <span id="level-label">Level</span>
+                        </button>
+                        <div class="creator-dropdown-menu" id="level-dropdown" style="display: none;">
+                            <button class="creator-dropdown-item active" data-level="all">All Levels</button>
+                            <button class="creator-dropdown-item" data-level="Beginner">Beginner</button>
+                            <button class="creator-dropdown-item" data-level="Intermediate">Intermediate</button>
+                        </div>
+                    </div>
+
+                    <div style="position: relative;">
+                        <button class="creator-filter-btn" id="category-btn" type="button"
+                            aria-label="Filter by category">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            <span id="category-label">Category</span>
+                        </button>
+                        <div class="creator-dropdown-menu" id="category-dropdown" style="display: none;">
+                            <button class="creator-dropdown-item active" data-category="all">All Categories</button>
+                            <button class="creator-dropdown-item" data-category="UI/UX Design">UI/UX Design</button>
+                            <button class="creator-dropdown-item" data-category="Drawing & Painting">Drawing &
+                                Painting</button>
+                            <button class="creator-dropdown-item" data-category="Animation">Animation</button>
+                            <button class="creator-dropdown-item" data-category="Social Media">Social Media</button>
+                            <button class="creator-dropdown-item" data-category="Marketing">Marketing</button>
+                            <button class="creator-dropdown-item" data-category="Creative Marketing">Creative
+                                Marketing</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="creator-filter-bar__right">
+                    <div style="position: relative;">
+                        <button class="creator-sort-btn" id="sort-btn" type="button" aria-label="Sort courses">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="21" y1="10" x2="3" y2="10"></line>
+                                <line x1="21" y1="6" x2="3" y2="6"></line>
+                                <line x1="21" y1="14" x2="3" y2="14"></line>
+                                <line x1="21" y1="18" x2="7" y2="18"></line>
+                            </svg>
+                            <span id="sort-label">Most relevant</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="creator-dropdown-menu" id="sort-dropdown"
+                            style="display: none; right: 0; left: auto;">
+                            <button class="creator-dropdown-item active" data-sort="relevant">Most relevant</button>
+                            <button class="creator-dropdown-item" data-sort="rating">Highest Rated</button>
+                            <button class="creator-dropdown-item" data-sort="price-low">Price: Low to High</button>
+                            <button class="creator-dropdown-item" data-sort="title">Course Title</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Grid (Exact cards from Screenshot 2) -->
+            <div class="creator-courses-grid" id="creator-courses-grid">
+                <!-- Card 1: Learn Figma from Basic -->
+                <a href="course-detail.html?id=figma" class="creator-course-card" data-category="UI/UX Design"
+                    data-level="Beginner" data-rating="4.5" data-price="25">
+                    <div class="creator-course-card__image">
+                        <img src="/figma-images/course_1_wireframe.jpg" alt="Learn Figma from Basic"
+                            class="creator-course-card__img" loading="lazy">
+                        <div class="creator-course-card__badges">
+                            <span class="creator-course-card__badge">17 Lessons</span>
+                            <span class="creator-course-card__badge">2 hours 16 mins</span>
+                            <span class="creator-course-card__badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="creator-course-card__body">
+                        <div class="creator-course-card__header-row">
+                            <h3 class="creator-course-card__title">Learn Figma from Basic</h3>
+                            <div class="creator-course-card__rating">
+                                <span>4.5</span>
+                                <span class="creator-course-card__rating-star">&#9733;</span>
+                            </div>
+                        </div>
+                        <p class="creator-course-card__author">by <span
+                                class="creator-course-card__author-link">purepearl studio</span></p>
+                        <div class="creator-course-card__meta">
+                            <span class="creator-course-card__level">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="2" y="14" width="4" height="8" rx="1" />
+                                    <rect x="9" y="8" width="4" height="14" rx="1" />
+                                    <rect x="16" y="2" width="4" height="20" rx="1" />
+                                </svg>
+                                Beginner
+                            </span>
+                            <div class="creator-course-card__avatars">
+                                <img src="/figma-images/b44979e1c98ecb3ec92ac86805fe55581fbeaa60.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/3fe559181733e0fb69226caee836e40092facb44.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/0577f0e9b7fca2f32639871454da0de95f951709.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/d0cd3adb501c64c1b4cf766de6abb9fe8925fb5f.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <span class="creator-course-card__avatar--count">26+</span>
+                            </div>
+                        </div>
+                        <div class="creator-course-card__footer">
+                            <div class="creator-course-card__price">
+                                <span class="creator-course-card__amount">$25</span>
+                                <span class="creator-course-card__period">/lifetime</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 2: Build Digital Asset -->
+                <a href="course-detail.html?id=digital-asset" class="creator-course-card"
+                    data-category="Drawing & Painting" data-level="Beginner" data-rating="4.5" data-price="25">
+                    <div class="creator-course-card__image">
+                        <img src="/figma-images/course_2_icons.jpg" alt="Build Digital Asset"
+                            class="creator-course-card__img" loading="lazy">
+                        <div class="creator-course-card__badges">
+                            <span class="creator-course-card__badge">17 Lessons</span>
+                            <span class="creator-course-card__badge">2 hours 16 mins</span>
+                            <span class="creator-course-card__badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="creator-course-card__body">
+                        <div class="creator-course-card__header-row">
+                            <h3 class="creator-course-card__title">Build Digital Asset</h3>
+                            <div class="creator-course-card__rating">
+                                <span>4.5</span>
+                                <span class="creator-course-card__rating-star">&#9733;</span>
+                            </div>
+                        </div>
+                        <p class="creator-course-card__author">by <span
+                                class="creator-course-card__author-link">purepearl studio</span></p>
+                        <div class="creator-course-card__meta">
+                            <span class="creator-course-card__level">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="2" y="14" width="4" height="8" rx="1" />
+                                    <rect x="9" y="8" width="4" height="14" rx="1" />
+                                    <rect x="16" y="2" width="4" height="20" rx="1" />
+                                </svg>
+                                Beginner
+                            </span>
+                            <div class="creator-course-card__avatars">
+                                <img src="/figma-images/b44979e1c98ecb3ec92ac86805fe55581fbeaa60.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/3fe559181733e0fb69226caee836e40092facb44.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/0577f0e9b7fca2f32639871454da0de95f951709.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/d0cd3adb501c64c1b4cf766de6abb9fe8925fb5f.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <span class="creator-course-card__avatar--count">26+</span>
+                            </div>
+                        </div>
+                        <div class="creator-course-card__footer">
+                            <div class="creator-course-card__price">
+                                <span class="creator-course-card__amount">$25</span>
+                                <span class="creator-course-card__period">/lifetime</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 3: the Power of Big Data -->
+                <a href="course-detail.html?id=big-data" class="creator-course-card" data-category="Animation"
+                    data-level="Beginner" data-rating="4.5" data-price="25">
+                    <div class="creator-course-card__image">
+                        <img src="/figma-images/course_3_charts.jpg" alt="the Power of Big Data"
+                            class="creator-course-card__img" loading="lazy">
+                        <div class="creator-course-card__badges">
+                            <span class="creator-course-card__badge">17 Lessons</span>
+                            <span class="creator-course-card__badge">2 hours 16 mins</span>
+                            <span class="creator-course-card__badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="creator-course-card__body">
+                        <div class="creator-course-card__header-row">
+                            <h3 class="creator-course-card__title">the Power of Big Data</h3>
+                            <div class="creator-course-card__rating">
+                                <span>4.5</span>
+                                <span class="creator-course-card__rating-star">&#9733;</span>
+                            </div>
+                        </div>
+                        <p class="creator-course-card__author">by <span
+                                class="creator-course-card__author-link">purepearl studio</span></p>
+                        <div class="creator-course-card__meta">
+                            <span class="creator-course-card__level">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="2" y="14" width="4" height="8" rx="1" />
+                                    <rect x="9" y="8" width="4" height="14" rx="1" />
+                                    <rect x="16" y="2" width="4" height="20" rx="1" />
+                                </svg>
+                                Beginner
+                            </span>
+                            <div class="creator-course-card__avatars">
+                                <img src="/figma-images/b44979e1c98ecb3ec92ac86805fe55581fbeaa60.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/3fe559181733e0fb69226caee836e40092facb44.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/0577f0e9b7fca2f32639871454da0de95f951709.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/d0cd3adb501c64c1b4cf766de6abb9fe8925fb5f.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <span class="creator-course-card__avatar--count">26+</span>
+                            </div>
+                        </div>
+                        <div class="creator-course-card__footer">
+                            <div class="creator-course-card__price">
+                                <span class="creator-course-card__amount">$25</span>
+                                <span class="creator-course-card__period">/lifetime</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 4: Balancing Productivity and Self-Care -->
+                <a href="course-detail.html?id=productivity" class="creator-course-card" data-category="Social Media"
+                    data-level="Beginner" data-rating="4.5" data-price="25">
+                    <div class="creator-course-card__image">
+                        <img src="/figma-images/course_4_domore.jpg" alt="Balancing Productivity and Self-Care"
+                            class="creator-course-card__img" loading="lazy">
+                        <div class="creator-course-card__badges">
+                            <span class="creator-course-card__badge">17 Lessons</span>
+                            <span class="creator-course-card__badge">2 hours 16 mins</span>
+                            <span class="creator-course-card__badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="creator-course-card__body">
+                        <div class="creator-course-card__header-row">
+                            <h3 class="creator-course-card__title">Balancing Productivity and Self-Care</h3>
+                            <div class="creator-course-card__rating">
+                                <span>4.5</span>
+                                <span class="creator-course-card__rating-star">&#9733;</span>
+                            </div>
+                        </div>
+                        <p class="creator-course-card__author">by <span
+                                class="creator-course-card__author-link">purepearl studio</span></p>
+                        <div class="creator-course-card__meta">
+                            <span class="creator-course-card__level">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="2" y="14" width="4" height="8" rx="1" />
+                                    <rect x="9" y="8" width="4" height="14" rx="1" />
+                                    <rect x="16" y="2" width="4" height="20" rx="1" />
+                                </svg>
+                                Beginner
+                            </span>
+                            <div class="creator-course-card__avatars">
+                                <img src="/figma-images/b44979e1c98ecb3ec92ac86805fe55581fbeaa60.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/3fe559181733e0fb69226caee836e40092facb44.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/0577f0e9b7fca2f32639871454da0de95f951709.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/d0cd3adb501c64c1b4cf766de6abb9fe8925fb5f.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <span class="creator-course-card__avatar--count">26+</span>
+                            </div>
+                        </div>
+                        <div class="creator-course-card__footer">
+                            <div class="creator-course-card__price">
+                                <span class="creator-course-card__amount">$25</span>
+                                <span class="creator-course-card__period">/lifetime</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 5: Mastering Money Management -->
+                <a href="course-detail.html?id=money" class="creator-course-card" data-category="Marketing"
+                    data-level="Beginner" data-rating="4.5" data-price="25">
+                    <div class="creator-course-card__image">
+                        <img src="/figma-images/course_5_graph.jpg" alt="Mastering Money Management"
+                            class="creator-course-card__img" loading="lazy">
+                        <div class="creator-course-card__badges">
+                            <span class="creator-course-card__badge">17 Lessons</span>
+                            <span class="creator-course-card__badge">2 hours 16 mins</span>
+                            <span class="creator-course-card__badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="creator-course-card__body">
+                        <div class="creator-course-card__header-row">
+                            <h3 class="creator-course-card__title">Mastering Money Management</h3>
+                            <div class="creator-course-card__rating">
+                                <span>4.5</span>
+                                <span class="creator-course-card__rating-star">&#9733;</span>
+                            </div>
+                        </div>
+                        <p class="creator-course-card__author">by <span
+                                class="creator-course-card__author-link">purepearl studio</span></p>
+                        <div class="creator-course-card__meta">
+                            <span class="creator-course-card__level">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="2" y="14" width="4" height="8" rx="1" />
+                                    <rect x="9" y="8" width="4" height="14" rx="1" />
+                                    <rect x="16" y="2" width="4" height="20" rx="1" />
+                                </svg>
+                                Beginner
+                            </span>
+                            <div class="creator-course-card__avatars">
+                                <img src="/figma-images/b44979e1c98ecb3ec92ac86805fe55581fbeaa60.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/3fe559181733e0fb69226caee836e40092facb44.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/0577f0e9b7fca2f32639871454da0de95f951709.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/d0cd3adb501c64c1b4cf766de6abb9fe8925fb5f.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <span class="creator-course-card__avatar--count">26+</span>
+                            </div>
+                        </div>
+                        <div class="creator-course-card__footer">
+                            <div class="creator-course-card__price">
+                                <span class="creator-course-card__amount">$25</span>
+                                <span class="creator-course-card__period">/lifetime</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 6: From Idea to Startup Success -->
+                <a href="course-detail.html?id=startup" class="creator-course-card" data-category="Creative Marketing"
+                    data-level="Beginner" data-rating="4.5" data-price="25">
+                    <div class="creator-course-card__image">
+                        <img src="/figma-images/course_6_team.jpg" alt="From Idea to Startup Success"
+                            class="creator-course-card__img" loading="lazy">
+                        <div class="creator-course-card__badges">
+                            <span class="creator-course-card__badge">17 Lessons</span>
+                            <span class="creator-course-card__badge">2 hours 16 mins</span>
+                            <span class="creator-course-card__badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="creator-course-card__body">
+                        <div class="creator-course-card__header-row">
+                            <h3 class="creator-course-card__title">From Idea to Startup Success</h3>
+                            <div class="creator-course-card__rating">
+                                <span>4.5</span>
+                                <span class="creator-course-card__rating-star">&#9733;</span>
+                            </div>
+                        </div>
+                        <p class="creator-course-card__author">by <span
+                                class="creator-course-card__author-link">purepearl studio</span></p>
+                        <div class="creator-course-card__meta">
+                            <span class="creator-course-card__level">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="2" y="14" width="4" height="8" rx="1" />
+                                    <rect x="9" y="8" width="4" height="14" rx="1" />
+                                    <rect x="16" y="2" width="4" height="20" rx="1" />
+                                </svg>
+                                Beginner
+                            </span>
+                            <div class="creator-course-card__avatars">
+                                <img src="/figma-images/b44979e1c98ecb3ec92ac86805fe55581fbeaa60.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/3fe559181733e0fb69226caee836e40092facb44.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/0577f0e9b7fca2f32639871454da0de95f951709.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <img src="/figma-images/d0cd3adb501c64c1b4cf766de6abb9fe8925fb5f.png" alt="Student"
+                                    class="creator-course-card__avatar">
+                                <span class="creator-course-card__avatar--count">26+</span>
+                            </div>
+                        </div>
+                        <div class="creator-course-card__footer">
+                            <div class="creator-course-card__price">
+                                <span class="creator-course-card__amount">$25</span>
+                                <span class="creator-course-card__period">/lifetime</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="main-footer">
+        <div class="footer__divider-top"></div>
+        <div class="footer__container">
+            <div class="footer__top">
+                <div class="footer__brand">
+                    <div class="footer__logo">
+                        <svg width="29" height="32" viewBox="0 0 29 32" fill="none">
+                            <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20" />
+                        </svg>
+                        <span class="footer__logo-text">ByteSpace</span>
+                    </div>
+                    <p class="footer__desc">Stay Up to date with our latest features and releases by joining our
+                        newsletter.</p>
+                    <div class="footer__newsletter" id="footer-newsletter">
+                        <div class="footer__newsletter-form">
+                            <input type="email" class="footer__newsletter-input" placeholder="Enter your email"
+                                id="newsletter-email">
+                            <button class="btn btn--lime footer__newsletter-btn" id="newsletter-search-btn"
+                                type="button">Search</button>
+                        </div>
+                        <p class="footer__newsletter-disclaimer">By subscribing, you agree to our Privacy Policy and
+                            consent to receive updates from our company.</p>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <div class="footer__col">
+                        <h4 class="footer__col-title">Browse</h4>
+                        <ul class="footer__col-list">
+                            <li><a href="search.html" class="footer__col-link">Featured Courses</a></li>
+                            <li><a href="search.html" class="footer__col-link">Featured Categories</a></li>
+                            <li><a href="search.html?category=Business" class="footer__col-link">Business</a></li>
+                            <li><a href="search.html?category=IT" class="footer__col-link">IT</a></li>
+                            <li><a href="search.html?category=Design" class="footer__col-link">Design</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__col">
+                        <ul class="footer__col-list" style="margin-top: 44px;">
+                            <li><a href="search.html?category=Development" class="footer__col-link">Development</a></li>
+                            <li><a href="search.html?category=Marketing" class="footer__col-link">Marketing</a></li>
+                            <li><a href="search.html?category=Photography" class="footer__col-link">Photography</a></li>
+                            <li><a href="search.html?category=Finance" class="footer__col-link">Finance</a></li>
+                            <li><a href="search.html?category=Sport" class="footer__col-link">Sport</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__col">
+                        <h4 class="footer__col-title">Platform</h4>
+                        <ul class="footer__col-list">
+                            <li><a href="register.html" class="footer__col-link">Become a Creator</a></li>
+                            <li><a href="index.html#growth-stats" class="footer__col-link">Affiliate Program</a></li>
+                            <li><a href="index.html#footer-newsletter" class="footer__col-link">Contact</a></li>
+                            <li><a href="index.html#testimonials" class="footer__col-link">Help</a></li>
+                            <li><a href="index.html#hero-partners" class="footer__col-link">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright">&copy; 2023 ByteSpace. All rights reserved.</p>
+                <div class="footer__legal">
+                    <a href="search.html" class="footer__legal-link">Privacy Policy</a>
+                    <a href="search.html" class="footer__legal-link">Terms of Service</a>
+                    <a href="search.html" class="footer__legal-link">Cookies Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Creator Page JavaScript Logic -->
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Interactive Follow Button
+            const followBtn = document.getElementById('creator-follow-btn');
+            const followersCountEl = document.getElementById('creator-followers-count');
+            let isFollowing = localStorage.getItem('bytespace_following_purepearl') === 'true';
+
+            function updateFollowUI() {
+                if (isFollowing) {
+                    followBtn.textContent = 'Following ✓';
+                    followBtn.classList.add('following');
+                    followersCountEl.textContent = '13';
+                } else {
+                    followBtn.textContent = 'Follow';
+                    followBtn.classList.remove('following');
+                    followersCountEl.textContent = '12';
+                }
+            }
+
+            updateFollowUI();
+
+            if (followBtn) {
+                followBtn.addEventListener('click', () => {
+                    isFollowing = !isFollowing;
+                    localStorage.setItem('bytespace_following_purepearl', isFollowing);
+                    updateFollowUI();
+                });
+            }
+
+            // Dropdown Menus: Level, Category, Sort
+            const levelBtn = document.getElementById('level-btn');
+            const levelDropdown = document.getElementById('level-dropdown');
+            const categoryBtn = document.getElementById('category-btn');
+            const categoryDropdown = document.getElementById('category-dropdown');
+            const sortBtn = document.getElementById('sort-btn');
+            const sortDropdown = document.getElementById('sort-dropdown');
+            const filterBtn = document.getElementById('filter-btn');
+
+            let currentLevel = 'all';
+            let currentCategory = 'all';
+            let currentSort = 'relevant';
+
+            function closeAllDropdowns() {
+                if (levelDropdown) levelDropdown.style.display = 'none';
+                if (categoryDropdown) categoryDropdown.style.display = 'none';
+                if (sortDropdown) sortDropdown.style.display = 'none';
+            }
+
+            if (levelBtn) {
+                levelBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = levelDropdown.style.display === 'flex';
+                    closeAllDropdowns();
+                    levelDropdown.style.display = isOpen ? 'none' : 'flex';
+                });
+            }
+
+            if (categoryBtn) {
+                categoryBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = categoryDropdown.style.display === 'flex';
+                    closeAllDropdowns();
+                    categoryDropdown.style.display = isOpen ? 'none' : 'flex';
+                });
+            }
+
+            if (sortBtn) {
+                sortBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = sortDropdown.style.display === 'flex';
+                    closeAllDropdowns();
+                    sortDropdown.style.display = isOpen ? 'none' : 'flex';
+                });
+            }
+
+            if (filterBtn) {
+                filterBtn.addEventListener('click', () => {
+                    // Reset all filters
+                    currentLevel = 'all';
+                    currentCategory = 'all';
+                    document.getElementById('level-label').textContent = 'Level';
+                    document.getElementById('category-label').textContent = 'Category';
+                    levelBtn.classList.remove('active');
+                    categoryBtn.classList.remove('active');
+                    filterBtn.classList.remove('active');
+                    applyFilters();
+                });
+            }
+
+            // Close dropdowns on document click
+            document.addEventListener('click', closeAllDropdowns);
+
+            // Level Selection
+            if (levelDropdown) {
+                levelDropdown.querySelectorAll('.creator-dropdown-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentLevel = item.getAttribute('data-level');
+                        levelDropdown.querySelectorAll('.creator-dropdown-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                        document.getElementById('level-label').textContent = currentLevel === 'all' ? 'Level' : currentLevel;
+                        levelBtn.classList.toggle('active', currentLevel !== 'all');
+                        closeAllDropdowns();
+                        applyFilters();
+                    });
+                });
+            }
+
+            // Category Selection
+            if (categoryDropdown) {
+                categoryDropdown.querySelectorAll('.creator-dropdown-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentCategory = item.getAttribute('data-category');
+                        categoryDropdown.querySelectorAll('.creator-dropdown-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                        document.getElementById('category-label').textContent = currentCategory === 'all' ? 'Category' : currentCategory;
+                        categoryBtn.classList.toggle('active', currentCategory !== 'all');
+                        closeAllDropdowns();
+                        applyFilters();
+                    });
+                });
+            }
+
+            // Sort Selection
+            if (sortDropdown) {
+                sortDropdown.querySelectorAll('.creator-dropdown-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentSort = item.getAttribute('data-sort');
+                        sortDropdown.querySelectorAll('.creator-dropdown-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                        document.getElementById('sort-label').textContent = item.textContent;
+                        closeAllDropdowns();
+                        applySorting();
+                    });
+                });
+            }
+
+            function applyFilters() {
+                const cards = document.querySelectorAll('.creator-course-card');
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    const cardLevel = card.getAttribute('data-level');
+
+                    const matchCategory = (currentCategory === 'all' || cardCategory === currentCategory);
+                    const matchLevel = (currentLevel === 'all' || cardLevel === currentLevel);
+
+                    if (matchCategory && matchLevel) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Update products count pill if filtered
+                const productsCountEl = document.getElementById('creator-products-count');
+                if (productsCountEl) {
+                    productsCountEl.textContent = (currentCategory === 'all' && currentLevel === 'all') ? '3' : visibleCount;
+                }
+            }
+
+            function applySorting() {
+                const grid = document.getElementById('creator-courses-grid');
+                if (!grid) return;
+                const cards = Array.from(grid.querySelectorAll('.creator-course-card'));
+
+                cards.sort((a, b) => {
+                    if (currentSort === 'rating') {
+                        return parseFloat(b.getAttribute('data-rating') || 0) - parseFloat(a.getAttribute('data-rating') || 0);
+                    }
+                    if (currentSort === 'price-low') {
+                        return parseFloat(a.getAttribute('data-price') || 0) - parseFloat(b.getAttribute('data-price') || 0);
+                    }
+                    if (currentSort === 'title') {
+                        const titleA = a.querySelector('.creator-course-card__title')?.textContent || '';
+                        const titleB = b.querySelector('.creator-course-card__title')?.textContent || '';
+                        return titleA.localeCompare(titleB);
+                    }
+                    return 0; // Default order
+                });
+
+                cards.forEach(card => grid.appendChild(card));
+            }
+        });
+    </script>
+</body>
+
+</html>

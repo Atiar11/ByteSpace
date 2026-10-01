@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Courses — ByteSpace</title>
+    <meta name="description" content="View your enrolled courses, track lesson progress, and continue learning on ByteSpace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="my-courses-body">
+
+    <!-- Header -->
+    <header class="header header--light" id="main-header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo" id="header-logo">
+                <svg class="header__logo-icon" width="29" height="32" viewBox="0 0 29 32" fill="none">
+                    <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20"/>
+                </svg>
+                <span class="header__logo-text" style="color: var(--gray-950);">ByteSpace</span>
+            </a>
+            <nav class="header__nav" id="header-nav">
+                <a href="index.html" class="header__nav-link">Home</a>
+                <a href="search.html" class="header__nav-link">Courses</a>
+                <a href="my-courses.html" class="header__nav-link header__nav-link--active">My Courses</a>
+                <a href="creators.html" class="header__nav-link">Creators</a>
+            </nav>
+            <div class="header__actions" id="header-actions">
+                <a href="login.html" class="header__action-link" style="color: var(--gray-950);">Sign In</a>
+                <a href="register.html" class="header__action-link" style="color: var(--gray-950);">Join Us</a>
+                <button class="header__cart-btn" id="header-cart" aria-label="Shopping cart" style="color: var(--gray-950);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    <span class="cart-badge-count" id="cart-badge-count" style="display: none;">0</span>
+                </button>
+            </div>
+            <button class="header__mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- My Courses Dashboard Content -->
+    <main class="my-courses-main">
+        <div class="my-courses-container">
+            <div class="my-courses-header-block">
+                <div>
+                    <h1 class="my-courses-title">Your Courses</h1>
+                    <p class="my-courses-desc">Enjoy and manage your bought courses. Pick up right where you left off.</p>
+                </div>
+                <div class="my-courses-quick-actions">
+                    <a href="search.html" class="btn btn--outline">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        Browse More Courses
+                    </a>
+                </div>
+            </div>
+
+            <!-- Enrolled Courses Section (Loaded dynamically) -->
+            <div id="enrolled-courses-wrapper">
+                <div class="enrolled-loading-state" id="enrolled-loading-spinner" style="text-align: center; padding: 60px 0;">
+                    <div class="spinner-ring"></div>
+                    <p style="margin-top: 14px; color: var(--gray-400);">Loading your courses...</p>
+                </div>
+
+                <!-- Enrolled Grid (Shown when user has bought courses) -->
+                <div class="enrolled-grid" id="enrolled-courses-grid" style="display: none;">
+                    <!-- Injected by JavaScript -->
+                </div>
+
+                <!-- Empty State + Suggested Courses (Shown when user has NO courses) -->
+                <div class="my-courses-empty-container" id="enrolled-empty-container" style="display: none;">
+                    <div class="my-courses-empty-card">
+                        <div class="empty-icon-circle">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#003BE2" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                            </svg>
+                        </div>
+                        <h2 class="empty-title">You haven't enrolled in any courses yet</h2>
+                        <p class="empty-desc">
+                            Your learning dashboard is currently empty. Explore our top-rated suggested courses below and start building your future today!
+                        </p>
+                    </div>
+
+                    <!-- Suggested Courses Header -->
+                    <div class="suggested-courses-header">
+                        <div class="suggested-badge">Recommended for You</div>
+                        <h3 class="suggested-title">Suggested Courses to Get You Started</h3>
+                        <p class="suggested-subtitle">Hand-picked bestsellers tailored to help you launch new skills quickly.</p>
+                    </div>
+
+                    <!-- Suggested Courses Grid -->
+                    <div class="suggested-courses-grid" id="suggested-courses-grid">
+                        <!-- Injected by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="home-footer" id="main-footer">
+        <div class="home-footer__container">
+            <div class="home-footer__top">
+                <div class="home-footer__brand">
+                    <a href="index.html" class="home-footer__logo">
+                        <svg class="header__logo-icon" width="29" height="32" viewBox="0 0 29 32" fill="none">
+                            <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20"/>
+                        </svg>
+                        <span class="home-footer__logo-text">ByteSpace</span>
+                    </a>
+                    <p class="home-footer__tagline">
+                        Stay Up to date with our latest features and releases by joining our newsletter.
+                    </p>
+                </div>
+                <div class="home-footer__links-group">
+                    <div class="home-footer__col">
+                        <ul class="home-footer__list">
+                            <li><a href="search.html">Featured Courses</a></li>
+                            <li><a href="search.html">Featured Categories</a></li>
+                            <li><a href="my-courses.html">My Courses</a></li>
+                        </ul>
+                    </div>
+                    <div class="home-footer__col">
+                        <ul class="home-footer__list">
+                            <li><a href="search.html?cat=development">Development</a></li>
+                            <li><a href="search.html?cat=marketing">Marketing</a></li>
+                            <li><a href="search.html?cat=photography">Photography</a></li>
+                        </ul>
+                    </div>
+                    <div class="home-footer__col">
+                        <ul class="home-footer__list">
+                            <li><a href="register.html">Become a Creator</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="home-footer__bottom">
+                <span class="home-footer__copyright">@ 2023 ByteSpace. All rights reserved.</span>
+                <div class="home-footer__legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initMyCoursesPage === 'function') {
+                initMyCoursesPage();
+            }
+        });
+    </script>
+</body>
+</html>

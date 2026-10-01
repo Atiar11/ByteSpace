@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "_id": "1",
+    "name": "Jamie Davis",
+    "email": "designer@example.com",
+    "password": "$2b$10$HQKIKKuFGhCuCIkbaiJc5uBGcy147KGlcvOeXTV.C.Zgg1BH6sg3e",
+    "createdAt": "2026-09-30T19:11:20.496Z",
+    "enrolledCourses": [
+      {
+        "courseId": "figma",
+        "courseTitle": "Learn Figma from Basic",
+        "author": "purepearl studio",
+        "image": "/figma-images/course_1_wireframe.jpg",
+        "price": 25,
+        "progress": 0,
+        "completedLessons": [],
+        "enrolledAt": "2026-09-30T22:20:53.540Z"
+      },
+      {
+        "courseId": "digital-asset",
+        "courseTitle": "Build Digital Asset: A Comprehensive Guide",
+        "author": "purepearl studio",
+        "image": "/figma-images/course_2_icons.jpg",
+        "price": 25,
+        "progress": 0,
+        "completedLessons": [],
+        "enrolledAt": "2026-09-30T22:22:02.593Z"
+      }
+    ]
+  },
+  {
+    "id": "1790795518657",
+    "_id": "1790795518657",
+    "name": "Alex Johnson",
+    "email": "alex@example.com",
+    "password": "$2b$10$J6K1AYm97PUQJc5HHuwIn.uwd7MwMVB99RdgBwQHuaXVIApHMk1SO",
+    "createdAt": "2026-09-30T19:11:58.657Z"
+  },
+  {
+    "id": "1790797458546",
+    "_id": "1790797458546",
+    "name": "Sarah Connor",
+    "email": "sarah.connor@example.com",
+    "password": "$2b$10$ESIy.XBIgmmRQZv8MLx3LO3FxT7u37xy/zXk5lnq1bAAXeUTaEzF2",
+    "createdAt": "2026-09-30T19:44:18.546Z"
+  },
+  {
+    "id": "1790798463914",
+    "_id": "1790798463914",
+    "name": "Atiar Osman",
+    "email": "atiar1103@gmail.com",
+    "password": "$2b$10$5Ovij.Bo1NpV4trSFHBDCe4bmcz69kDs389oB8iYNeYf7DtrLb0hi",
+    "createdAt": "2026-09-30T20:01:03.914Z"
+  },
+  {
+    "id": "1790798546975",
+    "_id": "1790798546975",
+    "name": "Tool",
+    "email": "toolopethgojira69@gmail.com",
+    "password": "$2b$10$7IscU60UCUU/g23drQV26u9xz1LGb2.p3N4Db1yt7QC33HS7Eml3e",
+    "createdAt": "2026-09-30T20:02:26.975Z",
+    "enrolledCourses": [
+      {
+        "courseId": "figma",
+        "courseTitle": "Learn Figma from Basic",
+        "author": "purepearl studio",
+        "image": "/figma-images/course_1_wireframe.jpg",
+        "price": 25,
+        "progress": 0,
+        "completedLessons": [],
+        "enrolledAt": "2026-09-30T23:12:44.869Z"
+      }
+    ]
+  },
+  {
+    "id": "1790801147098",
+    "_id": "1790801147098",
+    "name": "Atiar",
+    "email": "user@example.com",
+    "password": "$2b$10$aQATZ6nVxHqFAe6kUOEcmOVm9S7LCT4ux9mUcMbHHvg7ycCxzm.6K",
+    "createdAt": "2026-09-30T20:45:47.098Z"
+  },
+  {
+    "id": "1790807938201",
+    "_id": "1790807938201",
+    "name": "New User",
+    "email": "newuser@example.com",
+    "password": "$2b$10$FOtNTdnelZ5bngwXHk.qM.f.lUaCXs3fJ2zLFsQ4k7TrimXDg3t3q",
+    "createdAt": "2026-09-30T22:38:58.201Z"
+  }
+]

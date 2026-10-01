@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteSpace — Find Your Next Course</title>
+    <meta name="description"
+        content="ByteSpace is an online learning platform offering expert-led courses in design, development, marketing, and more. Start learning today.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="home-page-body">
+    <!-- SVG Filters for 3D Lime Ornaments -->
+    <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+        <defs>
+            <filter id="lime-spring-filter" color-interpolation-filters="sRGB">
+                <feColorMatrix type="matrix" values="
+                    0.831 0 0 0 0
+                    0 0.984 0 0 0
+                    0 0 0.125 0 0
+                    0 0 0 1 0" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Header (Screenshot 1) -->
+    <header class="home-header" id="main-header">
+        <div class="home-header__container">
+            <a href="index.html" class="home-header__logo" id="header-logo">
+                <svg class="header__logo-icon" width="29" height="32" viewBox="0 0 29 32" fill="none">
+                    <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20" />
+                </svg>
+                <span class="home-header__logo-text">ByteSpace</span>
+            </a>
+
+            <nav class="home-header__nav" id="header-nav">
+                <a href="index.html" class="home-header__nav-link home-header__nav-link--active">Home</a>
+                <a href="search.html" class="home-header__nav-link">Courses</a>
+                <a href="my-courses.html" class="home-header__nav-link" id="nav-my-courses-link">My Courses</a>
+                <a href="creators.html" class="home-header__nav-link">Creators</a>
+            </nav>
+
+            <div class="home-header__actions" id="header-actions">
+                <a href="login.html" class="home-header__action-link" id="header-signin-link">Sign In</a>
+                <a href="register.html" class="home-header__action-link" id="header-join-link">Join Us</a>
+                <a href="cart.html" class="header__cart-btn" id="header-cart" aria-label="Shopping cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    <span class="cart-badge-count" id="cart-badge-count" style="display: none;">0</span>
+                </a>
+            </div>
+
+            <button class="header__mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HERO SECTION (Screenshots 1 & 4) -->
+    <section class="home-hero" id="home-hero">
+        <div class="home-hero__grid-bg"></div>
+
+        <!-- 3D Decorative Ornaments around Hero -->
+        <img src="/figma-images/lime_spiral_spring.png" class="hero-3d-decor hero-3d-decor--spring" alt="3D Spring">
+        <img src="/figma-images/white_zigzag_squiggle.png" class="hero-3d-decor hero-3d-decor--zigzag" alt="3D Zigzag">
+        <img src="/figma-images/white_torus_donut.png" class="hero-3d-decor hero-3d-decor--torus" alt="3D Torus">
+        <img src="/figma-images/white_cone_pyramid.png" class="hero-3d-decor hero-3d-decor--cone" alt="3D Cone">
+
+        <div class="home-hero__container">
+            <!-- Hero Header Copy -->
+            <div class="home-hero__header">
+                <h1 class="home-hero__title">
+                    Get Access to Hundreds<br>Courses Available
+                </h1>
+                <p class="home-hero__subtitle">
+                    Unlock your creativity, gain valuable knowledge, and grow your business with our wide range of
+                    courses.
+                </p>
+
+                <!-- Pill Search Bar -->
+                <form class="home-hero__search-bar" action="search.html" method="GET" id="hero-search-form">
+                    <div class="home-hero__search-input-box">
+                        <svg class="home-hero__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="#82868E" stroke-width="2.2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" name="q" class="home-hero__search-input" placeholder="Course, topic, creator"
+                            id="search-input">
+                    </div>
+                    <button type="submit" class="home-hero__search-btn" id="hero-search-btn">Search</button>
+                </form>
+            </div>
+
+            <!-- Visual Stage: Circular Backdrop + Student with Laptop + Floating Badges -->
+            <div class="home-hero__stage">
+                <!-- Lime Backdrop Circle -->
+                <div class="home-hero__circle-backdrop"></div>
+
+                <!-- Smiling Student with Laptop and Headphones -->
+                <img src="/figma-images/hero_student.png" class="home-hero__student-img"
+                    alt="Student learning on ByteSpace">
+
+                <!-- Floating Badge 1: UI/UX Design -->
+                <div class="hero-float-badge hero-float-badge--uiux">
+                    <h4 class="hero-float-badge__title">UI/UX Design</h4>
+                    <p class="hero-float-badge__desc">200 Courses &bull; 1000+ Students</p>
+                </div>
+
+                <!-- Floating Badge 2: Happy Students -->
+                <div class="hero-float-badge hero-float-badge--students">
+                    <div class="hero-float-badge__header">
+                        <span class="hero-float-badge__title">Happy Students</span>
+                        <span class="hero-float-badge__stars">4.5 (240) &#9733;</span>
+                    </div>
+                    <div class="hero-float-badge__avatars">
+                        <img src="/figma-images/avatar_sarah_m.png" class="hero-float-avatar" alt="Student">
+                        <img src="/figma-images/avatar_james_l.png" class="hero-float-avatar" alt="Student">
+                        <img src="/figma-images/avatar_alex_b.png" class="hero-float-avatar" alt="Student">
+                        <img src="/figma-images/avatar_reviewer_3.png" class="hero-float-avatar" alt="Student">
+                        <span class="hero-float-avatar hero-float-avatar--count">2K+</span>
+                    </div>
+                </div>
+
+                <!-- Floating Badge 3: Learning Progress -->
+                <div class="hero-float-badge hero-float-badge--progress">
+                    <span class="hero-float-badge__label">Learning Progress</span>
+                    <span class="hero-float-badge__percent">55%</span>
+                    <div class="hero-float-badge__bar">
+                        <div class="hero-float-badge__fill" style="width: 55%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: SOCIAL PROOF / PARTNER LOGOS (Screenshot 2) -->
+    <section class="partner-logos-section">
+        <div class="partner-logos__container">
+            <div class="partner-logos__row">
+                <img src="/figma-images/partner_logo_1.svg" class="partner-logo-item" alt="Partner Logo 1">
+                <img src="/figma-images/partner_logo_2.svg" class="partner-logo-item" alt="Partner Logo 2">
+                <img src="/figma-images/partner_logo_3.svg" class="partner-logo-item" alt="Partner Logo 3">
+                <img src="/figma-images/partner_logo_4.svg" class="partner-logo-item" alt="Partner Logo 4">
+                <img src="/figma-images/partner_logo_5.svg" class="partner-logo-item" alt="Partner Logo 5">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: YOUR COURSES (Empty State + Suggested Courses OR Enrolled Courses) -->
+    <section class="your-courses-section" id="your-courses-section">
+        <div class="your-courses-container">
+            <div id="home-your-courses-content">
+                <!-- Injected dynamically by JS based on user enrollment status -->
+                <div class="enrolled-loading-state" id="home-courses-loading"
+                    style="text-align: center; padding: 40px 0;">
+                    <div class="spinner-ring"></div>
+                    <p style="margin-top: 10px; color: var(--gray-400); font-size: 14px;">Loading your learning
+                        dashboard...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: DISCOVER YOUR PASSION, BUILD YOUR SKILLS (Screenshot 2) -->
+    <section class="discover-section">
+        <div class="discover-section__container">
+            <div class="discover-section__header">
+                <h2 class="discover-section__title">Discover Your Passion, Build Your Skills</h2>
+                <p class="discover-section__desc">
+                    At Bytespace Courses, we bring you closer to life-changing knowledge. Explore a variety of courses
+                    across different fields, from technology to the arts, and make a difference in your career and life.
+                </p>
+            </div>
+
+            <!-- Filter Pills (3 Rows) -->
+            <div class="discover-tags">
+                <!-- Row 1 -->
+                <div class="discover-tags__row">
+                    <button class="discover-tag discover-tag--active" data-filter="featured">Featured</button>
+                    <button class="discover-tag" data-filter="music">Music</button>
+                    <button class="discover-tag" data-filter="drawing">Drawing & Painting</button>
+                    <button class="discover-tag" data-filter="marketing">Marketing</button>
+                    <button class="discover-tag" data-filter="animation">Animation</button>
+                    <button class="discover-tag" data-filter="social">Social Media</button>
+                    <button class="discover-tag" data-filter="uiux">UI/UX Design</button>
+                    <button class="discover-tag" data-filter="creative">Creative Marketing</button>
+                </div>
+                <!-- Row 2 -->
+                <div class="discover-tags__row">
+                    <button class="discover-tag" data-filter="digital-art">Digital Illustration</button>
+                    <button class="discover-tag" data-filter="video">Film & Video</button>
+                    <button class="discover-tag" data-filter="crafts">Crafts</button>
+                    <button class="discover-tag" data-filter="freelance">Freelance & Entrepreneurship</button>
+                    <button class="discover-tag" data-filter="graphic">Graphic Design</button>
+                    <button class="discover-tag" data-filter="photo">Photography</button>
+                </div>
+                <!-- Row 3 -->
+                <div class="discover-tags__row">
+                    <button class="discover-tag" data-filter="productivity">Productivity</button>
+                    <button class="discover-tag" data-filter="web-dev">Web Development</button>
+                    <button class="discover-tag" data-filter="data">Data Science</button>
+                    <button class="discover-tag" data-filter="cooking">Cooking</button>
+                    <a href="search.html" class="discover-tag-more">+ More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: EXPLORE DIVERSE LEARNING PATHS (Screenshot 3) -->
+    <section class="learning-paths-section">
+        <div class="learning-paths-section__container">
+            <div class="learning-paths-section__header">
+                <h2 class="learning-paths-section__title">Explore Diverse Learning Paths at Bytespace</h2>
+                <p class="learning-paths-section__desc">
+                    At Bytespace, we believe in empowering individuals through knowledge. Our diverse range of courses
+                    spans various fields, ensuring there's something for everyone. Unleash your potential and explore
+                    our carefully curated categories.
+                </p>
+            </div>
+
+            <!-- 6 Category Cards -->
+            <div class="learning-paths__grid">
+                <!-- Design -->
+                <a href="search.html?cat=design" class="path-card">
+                    <div class="path-card__icon-circle">
+                        <svg width="27" height="27" viewBox="0 0 28 27" fill="none">
+                            <path
+                                d="M19.86 12.7633 L22.215 10.4083 L16.59 4.78334 L14.235 7.13834 L8.025 0.943337 C6.855 -0.226663 4.95 -0.226663 3.78 0.943337 L0.93 3.79334 C-0.24 4.96334 -0.24 6.86834 0.93 8.03834 L7.125 14.2333 L0 21.3733 L0 26.9983 L5.625 26.9983 L12.765 19.8583 L18.96 26.0533 C20.385 27.4783 22.305 26.9533 23.205 26.0533 L26.055 23.2033 C27.225 22.0333 27.225 20.1283 26.055 18.9583 L19.86 12.7633 Z M9.27 12.1033 L3.06 5.90834 L5.895 3.05834 L7.8 4.96334 L6.03 6.74834 L8.145 8.86334 L9.93 7.07834 L12.105 9.25334 L9.27 12.1033 Z M21.09 23.9383 L14.895 17.7433 L17.745 14.8933 L19.92 17.0683 L18.135 18.8533 L20.25 20.9683 L22.035 19.1833 L23.94 21.0883 L21.09 23.9383 Z"
+                                fill="#242528" />
+                            <path
+                                d="M26.565 6.05834 C27.15 5.47334 27.15 4.52834 26.565 3.94334 L23.055 0.433337 C22.35 -0.271663 21.375 -0.00166329 20.94 0.433337 L18.195 3.17834 L23.82 8.80334 L26.565 6.05834 Z"
+                                fill="#242528" />
+                        </svg>
+                    </div>
+                    <span class="path-card__title">Design</span>
+                </a>
+
+                <!-- Development -->
+                <a href="search.html?cat=development" class="path-card">
+                    <div class="path-card__icon-circle">
+                        <svg width="24" height="30" viewBox="0 0 24 33" fill="none">
+                            <path
+                                d="M4.5 6 L19.5 6 L19.5 9 L22.5 9 L22.5 3 C22.5 1.35 21.15 0.015 19.5 0.015 L4.5 0 C2.85 0 1.5 1.35 1.5 3 L1.5 9 L4.5 9 L4.5 6 Z M17.115 23.385 L24 16.5 L17.115 9.615 L15 11.745 L19.755 16.5 L15 21.255 L17.115 23.385 Z M9 21.255 L4.245 16.5 L9 11.745 L6.885 9.615 L0 16.5 L6.885 23.385 L9 21.255 Z M19.5 27 L4.5 27 L4.5 24 L1.5 24 L1.5 30 C1.5 31.65 2.85 33 4.5 33 L19.5 33 C21.15 33 22.5 31.65 22.5 30 L22.5 24 L19.5 24 L19.5 27 Z"
+                                fill="#242528" />
+                        </svg>
+                    </div>
+                    <span class="path-card__title">Development</span>
+                </a>
+
+                <!-- IT & Software -->
+                <a href="search.html?cat=it" class="path-card">
+                    <div class="path-card__icon-circle">
+                        <svg width="30" height="20" viewBox="0 0 36 24" fill="none">
+                            <path
+                                d="M30 21 C31.65 21 32.985 19.65 32.985 18 L33 3 C33 1.35 31.65 0 30 0 L6 0 C4.35 0 3 1.35 3 3 L3 18 C3 19.65 4.35 21 6 21 L0 21 L0 24 L36 24 L36 21 L30 21 Z M6 3 L30 3 L30 18 L6 18 L6 3 Z"
+                                fill="#242528" />
+                        </svg>
+                    </div>
+                    <span class="path-card__title">IT & Software</span>
+                </a>
+
+                <!-- Business -->
+                <a href="search.html?cat=business" class="path-card">
+                    <div class="path-card__icon-circle">
+                        <svg width="26" height="24" viewBox="0 0 30 27" fill="none">
+                            <path
+                                d="M15 6 L15 3 C15 1.35 13.65 0 12 0 L3 0 C1.35 0 0 1.35 0 3 L0 24 C0 25.65 1.35 27 3 27 L27 27 C28.65 27 30 25.65 30 24 L30 9 C30 7.35 28.65 6 27 6 L15 6 Z M6 24 L3 24 L3 21 L6 21 L6 24 Z M6 18 L3 18 L3 15 L6 15 L6 18 Z M6 12 L3 12 L3 9 L6 9 L6 12 Z M6 6 L3 6 L3 3 L6 3 L6 6 Z M12 24 L9 24 L9 21 L12 21 L12 24 Z M12 18 L9 18 L9 15 L12 15 L12 18 Z M12 12 L9 12 L9 9 L12 9 L12 12 Z M12 6 L9 6 L9 3 L12 3 L12 6 Z M25.5 24 L15 24 L15 21 L18 21 L18 18 L15 18 L15 15 L18 15 L18 12 L15 12 L15 9 L25.5 9 C26.325 9 27 9.675 27 10.5 L27 22.5 C27 23.325 26.325 24 25.5 24 Z M24 12 L21 12 L21 15 L24 15 L24 12 Z M24 18 L21 18 L21 21 L24 21 L24 18 Z"
+                                fill="#242528" />
+                        </svg>
+                    </div>
+                    <span class="path-card__title">Business</span>
+                </a>
+
+                <!-- Marketing -->
+                <a href="search.html?cat=marketing" class="path-card">
+                    <div class="path-card__icon-circle">
+                        <svg width="26" height="26" viewBox="0 0 30 30" fill="none">
+                            <path
+                                d="M13.5 18 L10.5 18 C10.5 10.545 16.545 4.5 24 4.5 L24 7.5 C18.195 7.5 13.5 12.195 13.5 18 Z M24 13.5 L24 10.5 C19.86 10.5 16.5 13.86 16.5 18 L19.5 18 C19.5 15.51 21.51 13.5 24 13.5 Z M7.5 3 C7.5 1.335 6.165 0 4.5 0 C2.835 0 1.5 1.335 1.5 3 C1.5 4.665 2.835 6 4.5 6 C6.165 6 7.5 4.665 7.5 3 Z M14.175 3.75 L11.175 3.75 C10.815 5.88 8.985 7.5 6.75 7.5 L2.25 7.5 C1.005 7.5 0 8.505 0 9.75 L0 13.5 L9 13.5 L9 10.11 C11.79 9.225 13.875 6.765 14.175 3.75 Z M25.5 22.5 C27.165 22.5 28.5 21.165 28.5 19.5 C28.5 17.835 27.165 16.5 25.5 16.5 C23.835 16.5 22.5 17.835 22.5 19.5 C22.5 21.165 23.835 22.5 25.5 22.5 Z M27.75 24 L23.25 24 C21.015 24 19.185 22.38 18.825 20.25 L15.825 20.25 C16.125 23.265 18.21 25.725 21 26.61 L21 30 L30 30 L30 26.25 C30 25.005 28.995 24 27.75 24 Z"
+                                fill="#242528" />
+                        </svg>
+                    </div>
+                    <span class="path-card__title">Marketing</span>
+                </a>
+
+                <!-- Photography -->
+                <a href="search.html?cat=photography" class="path-card">
+                    <div class="path-card__icon-circle">
+                        <svg width="26" height="24" viewBox="0 0 30 27" fill="none">
+                            <path
+                                d="M27 3 L22.245 3 L19.5 0 L10.5 0 L7.755 3 L3 3 C1.35 3 0 4.35 0 6 L0 24 C0 25.65 1.35 27 3 27 L27 27 C28.65 27 30 25.65 30 24 L30 6 C30 4.35 28.65 3 27 3 Z M27 24 L3 24 L3 6 L9.075 6 L11.82 3 L18.18 3 L20.925 6 L27 6 L27 24 Z"
+                                fill="#242528" />
+                            <path
+                                d="M15 15 C16.6569 15 18 13.6569 18 12 C18 10.3431 16.6569 9 15 9 C13.3431 9 12 10.3431 12 12 C12 13.6569 13.3431 15 15 15 Z"
+                                fill="#242528" />
+                            <path
+                                d="M19.17 17.37 C17.895 16.815 16.485 16.5 15 16.5 C13.515 16.5 12.105 16.815 10.83 17.37 C9.72 17.85 9 18.93 9 20.145 L9 21 L21 21 L21 20.145 C21 18.93 20.28 17.85 19.17 17.37 Z"
+                                fill="#242528" />
+                        </svg>
+                    </div>
+                    <span class="path-card__title">Photography</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: COURSE CARDS GRID (Screenshot 5) -->
+    <section class="courses-showcase-section" id="courses-section">
+        <div class="courses-showcase__container">
+            <div class="courses-showcase__grid">
+
+                <!-- Course Card 1: Learn Figma from Basic -->
+                <a href="course-detail.html?id=figma" class="course-card-figma">
+                    <div class="course-card-figma__img-box">
+                        <img src="/figma-images/course_1_wireframe.jpg" class="course-card-figma__img"
+                            alt="Learn Figma from Basic">
+                        <div class="course-card-figma__badges">
+                            <span class="card-badge">17 Lessons</span>
+                            <span class="card-badge">2 hours 16 mins</span>
+                            <span class="card-badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="course-card-figma__body">
+                        <div class="course-card-figma__title-row">
+                            <h3 class="course-card-figma__title">Learn Figma from Basic</h3>
+                            <span class="course-card-figma__rating">4.5 <span class="star-icon">&#9733;</span></span>
+                        </div>
+                        <p class="course-card-figma__author">by <span class="author-name">purepearl studio</span></p>
+
+                        <div class="course-card-figma__meta-row">
+                            <div class="course-level-pill">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280"
+                                    stroke-width="2">
+                                    <rect x="4" y="15" width="4" height="5" />
+                                    <rect x="10" y="9" width="4" height="11" />
+                                    <rect x="16" y="4" width="4" height="16" />
+                                </svg>
+                                <span>Beginner</span>
+                            </div>
+                            <div class="course-avatars-row">
+                                <img src="/figma-images/avatar_sarah_m.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_james_l.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_alex_b.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_reviewer_3.png" class="student-avatar" alt="Student">
+                                <span class="student-avatar student-avatar--count">26+</span>
+                            </div>
+                        </div>
+
+                        <div class="course-card-figma__price-row">
+                            <span class="price-value">$25</span>
+                            <span class="price-suffix">/lifetime</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Course Card 2: Build Digital Asset -->
+                <a href="course-detail.html?id=digital-asset" class="course-card-figma">
+                    <div class="course-card-figma__img-box">
+                        <img src="/figma-images/course_2_icons.jpg" class="course-card-figma__img"
+                            alt="Build Digital Asset">
+                        <div class="course-card-figma__badges">
+                            <span class="card-badge">17 Lessons</span>
+                            <span class="card-badge">2 hours 16 mins</span>
+                            <span class="card-badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="course-card-figma__body">
+                        <div class="course-card-figma__title-row">
+                            <h3 class="course-card-figma__title">Build Digital Asset</h3>
+                            <span class="course-card-figma__rating">4.5 <span class="star-icon">&#9733;</span></span>
+                        </div>
+                        <p class="course-card-figma__author">by <span class="author-name">purepearl studio</span></p>
+
+                        <div class="course-card-figma__meta-row">
+                            <div class="course-level-pill">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280"
+                                    stroke-width="2">
+                                    <rect x="4" y="15" width="4" height="5" />
+                                    <rect x="10" y="9" width="4" height="11" />
+                                    <rect x="16" y="4" width="4" height="16" />
+                                </svg>
+                                <span>Beginner</span>
+                            </div>
+                            <div class="course-avatars-row">
+                                <img src="/figma-images/avatar_sarah_m.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_james_l.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_alex_b.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_reviewer_3.png" class="student-avatar" alt="Student">
+                                <span class="student-avatar student-avatar--count">26+</span>
+                            </div>
+                        </div>
+
+                        <div class="course-card-figma__price-row">
+                            <span class="price-value">$25</span>
+                            <span class="price-suffix">/lifetime</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Course Card 3: the Power of Big Data -->
+                <a href="course-detail.html?id=big-data" class="course-card-figma">
+                    <div class="course-card-figma__img-box">
+                        <img src="/figma-images/course_3_charts.jpg" class="course-card-figma__img"
+                            alt="the Power of Big Data">
+                        <div class="course-card-figma__badges">
+                            <span class="card-badge">17 Lessons</span>
+                            <span class="card-badge">2 hours 16 mins</span>
+                            <span class="card-badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="course-card-figma__body">
+                        <div class="course-card-figma__title-row">
+                            <h3 class="course-card-figma__title">the Power of Big Data</h3>
+                            <span class="course-card-figma__rating">4.5 <span class="star-icon">&#9733;</span></span>
+                        </div>
+                        <p class="course-card-figma__author">by <span class="author-name">purepearl studio</span></p>
+
+                        <div class="course-card-figma__meta-row">
+                            <div class="course-level-pill">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280"
+                                    stroke-width="2">
+                                    <rect x="4" y="15" width="4" height="5" />
+                                    <rect x="10" y="9" width="4" height="11" />
+                                    <rect x="16" y="4" width="4" height="16" />
+                                </svg>
+                                <span>Beginner</span>
+                            </div>
+                            <div class="course-avatars-row">
+                                <img src="/figma-images/avatar_sarah_m.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_james_l.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_alex_b.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_reviewer_3.png" class="student-avatar" alt="Student">
+                                <span class="student-avatar student-avatar--count">26+</span>
+                            </div>
+                        </div>
+
+                        <div class="course-card-figma__price-row">
+                            <span class="price-value">$25</span>
+                            <span class="price-suffix">/lifetime</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Course Card 4: Mastering UI Workspace -->
+                <a href="course-detail.html?id=productivity" class="course-card-figma">
+                    <div class="course-card-figma__img-box">
+                        <img src="/figma-images/course_4_domore.jpg" class="course-card-figma__img"
+                            alt="Mastering UI Workspace">
+                        <div class="course-card-figma__badges">
+                            <span class="card-badge">17 Lessons</span>
+                            <span class="card-badge">2 hours 16 mins</span>
+                            <span class="card-badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="course-card-figma__body">
+                        <div class="course-card-figma__title-row">
+                            <h3 class="course-card-figma__title">Mastering UI Workspace</h3>
+                            <span class="course-card-figma__rating">4.5 <span class="star-icon">&#9733;</span></span>
+                        </div>
+                        <p class="course-card-figma__author">by <span class="author-name">purepearl studio</span></p>
+
+                        <div class="course-card-figma__meta-row">
+                            <div class="course-level-pill">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280"
+                                    stroke-width="2">
+                                    <rect x="4" y="15" width="4" height="5" />
+                                    <rect x="10" y="9" width="4" height="11" />
+                                    <rect x="16" y="4" width="4" height="16" />
+                                </svg>
+                                <span>Beginner</span>
+                            </div>
+                            <div class="course-avatars-row">
+                                <img src="/figma-images/avatar_sarah_m.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_james_l.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_alex_b.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_reviewer_3.png" class="student-avatar" alt="Student">
+                                <span class="student-avatar student-avatar--count">26+</span>
+                            </div>
+                        </div>
+
+                        <div class="course-card-figma__price-row">
+                            <span class="price-value">$25</span>
+                            <span class="price-suffix">/lifetime</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Course Card 5: Financial Growth & Analytics -->
+                <a href="course-detail.html?id=money" class="course-card-figma">
+                    <div class="course-card-figma__img-box">
+                        <img src="/figma-images/course_5_graph.jpg" class="course-card-figma__img"
+                            alt="Financial Growth & Analytics">
+                        <div class="course-card-figma__badges">
+                            <span class="card-badge">17 Lessons</span>
+                            <span class="card-badge">2 hours 16 mins</span>
+                            <span class="card-badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="course-card-figma__body">
+                        <div class="course-card-figma__title-row">
+                            <h3 class="course-card-figma__title">Financial Growth & Analytics</h3>
+                            <span class="course-card-figma__rating">4.5 <span class="star-icon">&#9733;</span></span>
+                        </div>
+                        <p class="course-card-figma__author">by <span class="author-name">purepearl studio</span></p>
+
+                        <div class="course-card-figma__meta-row">
+                            <div class="course-level-pill">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280"
+                                    stroke-width="2">
+                                    <rect x="4" y="15" width="4" height="5" />
+                                    <rect x="10" y="9" width="4" height="11" />
+                                    <rect x="16" y="4" width="4" height="16" />
+                                </svg>
+                                <span>Beginner</span>
+                            </div>
+                            <div class="course-avatars-row">
+                                <img src="/figma-images/avatar_sarah_m.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_james_l.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_alex_b.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_reviewer_3.png" class="student-avatar" alt="Student">
+                                <span class="student-avatar student-avatar--count">26+</span>
+                            </div>
+                        </div>
+
+                        <div class="course-card-figma__price-row">
+                            <span class="price-value">$25</span>
+                            <span class="price-suffix">/lifetime</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Course Card 6: Creative Team Collaboration -->
+                <a href="course-detail.html?id=startup" class="course-card-figma">
+                    <div class="course-card-figma__img-box">
+                        <img src="/figma-images/course_6_team.jpg" class="course-card-figma__img"
+                            alt="Creative Team Collaboration">
+                        <div class="course-card-figma__badges">
+                            <span class="card-badge">17 Lessons</span>
+                            <span class="card-badge">2 hours 16 mins</span>
+                            <span class="card-badge">59 Comments</span>
+                        </div>
+                    </div>
+                    <div class="course-card-figma__body">
+                        <div class="course-card-figma__title-row">
+                            <h3 class="course-card-figma__title">Creative Team Collaboration</h3>
+                            <span class="course-card-figma__rating">4.5 <span class="star-icon">&#9733;</span></span>
+                        </div>
+                        <p class="course-card-figma__author">by <span class="author-name">purepearl studio</span></p>
+
+                        <div class="course-card-figma__meta-row">
+                            <div class="course-level-pill">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280"
+                                    stroke-width="2">
+                                    <rect x="4" y="15" width="4" height="5" />
+                                    <rect x="10" y="9" width="4" height="11" />
+                                    <rect x="16" y="4" width="4" height="16" />
+                                </svg>
+                                <span>Beginner</span>
+                            </div>
+                            <div class="course-avatars-row">
+                                <img src="/figma-images/avatar_sarah_m.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_james_l.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_alex_b.png" class="student-avatar" alt="Student">
+                                <img src="/figma-images/avatar_reviewer_3.png" class="student-avatar" alt="Student">
+                                <span class="student-avatar student-avatar--count">26+</span>
+                            </div>
+                        </div>
+
+                        <div class="course-card-figma__price-row">
+                            <span class="price-value">$25</span>
+                            <span class="price-suffix">/lifetime</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: YOUR PATH TO PROFESSIONAL GROWTH (Screenshot 10) -->
+    <section class="growth-section">
+        <div class="growth-section__container">
+            <div class="growth-section__content">
+                <h2 class="growth-section__title">Your Path to Professional Growth Starts Here!</h2>
+                <p class="growth-section__desc">
+                    Explore our curated selection of courses tailored to enhance your capabilities and accelerate your
+                    career journey. Whether you are looking to sharpen specific skills, gain industry expertise, or
+                    embark on a new career path entirely, we have the resources you need.
+                </p>
+
+                <!-- 3 Stats Counter -->
+                <div class="growth-stats">
+                    <div class="growth-stat-item">
+                        <span class="growth-stat-item__number">12K</span>
+                        <span class="growth-stat-item__label">Students</span>
+                    </div>
+                    <div class="growth-stat-item">
+                        <span class="growth-stat-item__number">70+</span>
+                        <span class="growth-stat-item__label">Courses</span>
+                    </div>
+                    <div class="growth-stat-item">
+                        <span class="growth-stat-item__number">16</span>
+                        <span class="growth-stat-item__label">Creators</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Growth Visual Composition -->
+            <div class="growth-section__visual">
+                <!-- Floating Mini Course Card Preview -->
+                <div class="growth-mini-card">
+                    <div class="growth-mini-card__img-box">
+                        <img src="/figma-images/course_1_wireframe.jpg" class="growth-mini-card__img"
+                            alt="Learn Figma from Basic">
+                        <div class="growth-mini-card__badges">
+                            <span class="card-badge">17 Lessons</span>
+                            <span class="card-badge">2 hours 16 mins</span>
+                        </div>
+                    </div>
+                    <div class="growth-mini-card__info">
+                        <h4 class="growth-mini-card__title">Learn Figma from Basic</h4>
+                        <span class="growth-mini-card__author">by <span class="author-name">purepearl
+                                studio</span></span>
+                        <div class="growth-mini-card__meta">
+                            <div class="course-level-pill">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280"
+                                    stroke-width="2">
+                                    <rect x="4" y="15" width="4" height="5" />
+                                    <rect x="10" y="9" width="4" height="11" />
+                                    <rect x="16" y="4" width="4" height="16" />
+                                </svg>
+                                <span>Beginner</span>
+                            </div>
+                        </div>
+                        <div class="growth-mini-card__footer">
+                            <div class="growth-mini-card__price-row">
+                                <span class="price-value">$25</span>
+                                <span class="price-suffix">/lifetime</span>
+                            </div>
+                            <span class="growth-mini-card__rating">4.5 <span class="star-icon">&#9733;</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student with Laptop -->
+                <img src="/figma-images/hero_student.png" class="growth-student-img" alt="Student">
+
+                <!-- Learning Progress Badge -->
+                <div class="growth-progress-badge">
+                    <span class="growth-progress-badge__title">Learning Progress</span>
+                    <span class="growth-progress-badge__value">55%</span>
+                    <div class="growth-progress-badge__bar">
+                        <div class="growth-progress-badge__fill" style="width: 55%;"></div>
+                    </div>
+                </div>
+
+                <!-- 3D Spiral Spring -->
+                <img src="/figma-images/lime_spiral_spring.png" class="growth-3d-spring" alt="3D Spring">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: CREATE & MANAGE COURSES EASILY (Screenshot 9) -->
+    <section class="manage-section">
+        <div class="manage-section__container">
+            <!-- Left: Visual Stage with Female Instructor & Stats Badges -->
+            <div class="manage-section__visual">
+                <img src="/figma-images/teacher_female.png" class="manage-teacher-img" alt="Teacher">
+
+                <!-- Total Revenue Badge -->
+                <div class="manage-badge manage-badge--revenue">
+                    <div class="manage-badge__header">
+                        <span class="manage-badge__title">Total Revenue</span>
+                        <span class="manage-badge__date">July 1-28</span>
+                    </div>
+                    <div class="manage-badge__amount-row">
+                        <span class="manage-badge__amount">$120.29</span>
+                        <span class="manage-badge__growth">+12$</span>
+                    </div>
+                    <div class="manage-badge__bar">
+                        <div class="manage-badge__fill" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <!-- Year to Date Badge -->
+                <div class="manage-badge manage-badge--ytd">
+                    <div class="manage-badge__header">
+                        <span class="manage-badge__title">Year to Date</span>
+                        <span class="manage-badge__date">2023</span>
+                    </div>
+                    <div class="manage-badge__amount-row">
+                        <span class="manage-badge__amount">$1,200.38</span>
+                        <span class="manage-badge__growth">+12$</span>
+                    </div>
+                </div>
+
+                <!-- Happy Students Badge -->
+                <div class="manage-badge manage-badge--students">
+                    <div class="manage-badge__header">
+                        <span class="manage-badge__title">Happy Students</span>
+                        <span class="manage-badge__stars">4.5 (240) &#9733;</span>
+                    </div>
+                    <div class="manage-badge__avatars">
+                        <img src="/figma-images/avatar_sarah_m.png" class="avatar-sm" alt="Student">
+                        <img src="/figma-images/avatar_james_l.png" class="avatar-sm" alt="Student">
+                        <img src="/figma-images/avatar_alex_b.png" class="avatar-sm" alt="Student">
+                        <img src="/figma-images/avatar_reviewer_3.png" class="avatar-sm" alt="Student">
+                        <span class="avatar-sm avatar-sm--count">2K+</span>
+                    </div>
+                </div>
+
+                <!-- 3D Spring behind her -->
+                <img src="/figma-images/lime_spiral_spring.png" class="manage-3d-spring" alt="3D Spring">
+            </div>
+
+            <!-- Right: Content & Checklist -->
+            <div class="manage-section__content">
+                <h2 class="manage-section__title">Create & Manage Courses Easily.</h2>
+                <p class="manage-section__desc">
+                    ByteSpace supports individuals or entities in the creation, publication, and administration of
+                    educational courses.
+                </p>
+
+                <ul class="manage-checklist">
+                    <li class="manage-checklist__item">
+                        <div class="manage-check-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF"
+                                stroke-width="3.5">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                        <span>Share Your Expertise</span>
+                    </li>
+                    <li class="manage-checklist__item">
+                        <div class="manage-check-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF"
+                                stroke-width="3.5">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                        <span>Monetize Your Passion</span>
+                    </li>
+                    <li class="manage-checklist__item">
+                        <div class="manage-check-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF"
+                                stroke-width="3.5">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                        <span>Flexibility and Autonomy</span>
+                    </li>
+                    <li class="manage-checklist__item">
+                        <div class="manage-check-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF"
+                                stroke-width="3.5">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                        <span>Build a Community</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: CREATOR CTA BANNER (Screenshot 7) -->
+    <section class="cta-banner-section" id="creator-cta">
+        <div class="cta-banner-box">
+            <div class="cta-banner__grid-bg"></div>
+
+            <!-- 3D Ornaments -->
+            <img src="/figma-images/lime_spiral_spring.png" class="cta-3d cta-3d--spring" alt="3D Spring">
+            <img src="/figma-images/white_zigzag_squiggle.png" class="cta-3d cta-3d--zigzag" alt="3D Zigzag">
+            <img src="/figma-images/white_torus_donut.png" class="cta-3d cta-3d--torus" alt="3D Torus">
+            <img src="/figma-images/white_cone_pyramid.png" class="cta-3d cta-3d--cone" alt="3D Cone">
+            <img src="/figma-images/lime_cone_1.png" class="cta-3d cta-3d--lime-cone" alt="3D Lime Cone">
+
+            <div class="cta-banner__content">
+                <h2 class="cta-banner__title">Unlock Your Potential as a Creator with ByteSpace</h2>
+                <p class="cta-banner__desc">
+                    Experience the collaboration of numerous creators and an expanding selection of courses. Register
+                    now and become a part of a community comprising over 10,000 local and international creators.
+                    Utilize our Course Editor, and showcase your expertise by publishing your finest course on the
+                    ByteSpace Course Library.
+                </p>
+                <a href="register.html" class="cta-banner__btn" id="join-creator-btn">Join as Creator</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: TESTIMONIALS (Screenshot 8) -->
+    <section class="testimonials-figma-section">
+        <div class="testimonials-figma__container">
+            <div class="testimonials-figma__header">
+                <div class="testimonials-figma__header-left">
+                    <h2 class="testimonials-figma__title">Discover What Our<br>Community Is Saying</h2>
+                </div>
+                <div class="testimonials-figma__header-right">
+                    <p class="testimonials-figma__desc">
+                        At ByteSpace, our vibrant community of learners and creators is at the heart of what we do. Hear
+                        directly from those who have experienced the transformative journey of learning and creating on
+                        our platform. Explore testimonials that reflect the diverse perspectives of enthusiastic
+                        learners and accomplished creators.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3 Testimonial Cards -->
+            <div class="testimonials-figma__grid">
+                <!-- Card 1: Sarah M. -->
+                <div class="testimonial-card-figma">
+                    <div class="testimonial-card-figma__top">
+                        <img src="/figma-images/avatar_sarah_m.png" class="testimonial-card-figma__avatar"
+                            alt="Sarah M.">
+                        <div class="testimonial-card-figma__author">
+                            <h4 class="testimonial-card-figma__name">Sarah M.</h4>
+                            <span class="testimonial-card-figma__role">Enthusiastic Learner</span>
+                        </div>
+                    </div>
+                    <p class="testimonial-card-figma__quote">
+                        "ByteSpace has transformed my approach to learning. The diverse range of courses and the quality
+                        of content provided by creators have exceeded my expectations. The platform truly fosters a
+                        sense of community and lifelong learning."
+                    </p>
+                </div>
+
+                <!-- Card 2: James L. -->
+                <div class="testimonial-card-figma">
+                    <div class="testimonial-card-figma__top">
+                        <img src="/figma-images/avatar_james_l.png" class="testimonial-card-figma__avatar"
+                            alt="James L.">
+                        <div class="testimonial-card-figma__author">
+                            <h4 class="testimonial-card-figma__name">James L.</h4>
+                            <span class="testimonial-card-figma__role">Lifelong Learner</span>
+                        </div>
+                    </div>
+                    <p class="testimonial-card-figma__quote">
+                        "I've tried several online learning platforms, and ByteSpace stands out for its vibrant
+                        community and the variety of courses available. The easy navigation and engaging content make it
+                        a go-to platform for continuous skill development."
+                    </p>
+                </div>
+
+                <!-- Card 3: Alex B. -->
+                <div class="testimonial-card-figma">
+                    <div class="testimonial-card-figma__top">
+                        <img src="/figma-images/avatar_alex_b.png" class="testimonial-card-figma__avatar" alt="Alex B.">
+                        <div class="testimonial-card-figma__author">
+                            <h4 class="testimonial-card-figma__name">Alex B.</h4>
+                            <span class="testimonial-card-figma__role">Inspired Creator</span>
+                        </div>
+                    </div>
+                    <p class="testimonial-card-figma__quote">
+                        "As a creator, ByteSpace has been a game-changer for me. The Course Editor is user-friendly, and
+                        the support from the community is incredible. It's fulfilling to see my courses making a
+                        positive impact on learners globally."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: FOOTER (Screenshot 6) -->
+    <footer class="home-footer" id="main-footer">
+        <div class="home-footer__container">
+            <div class="home-footer__top">
+                <!-- Newsletter Left -->
+                <div class="home-footer__brand">
+                    <a href="index.html" class="home-footer__logo">
+                        <svg class="header__logo-icon" width="29" height="32" viewBox="0 0 29 32" fill="none">
+                            <path d="M14.44 0L28.88 8v16l-14.44 8L0 24V8L14.44 0z" fill="#D4FB20" />
+                        </svg>
+                        <span class="home-footer__logo-text">ByteSpace</span>
+                    </a>
+                    <p class="home-footer__tagline">
+                        Stay Up to date with our latest features and releases by joining our newsletter.
+                    </p>
+                    <form class="home-footer__newsletter"
+                        onsubmit="event.preventDefault(); alert('Thank you for subscribing to ByteSpace!');">
+                        <div class="home-footer__input-box">
+                            <input type="email" class="home-footer__input" placeholder="Enter your email" required>
+                        </div>
+                        <button type="submit" class="home-footer__submit-btn">Search</button>
+                    </form>
+                    <p class="home-footer__disclaimer">
+                        By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
+                    </p>
+                </div>
+
+                <!-- Navigation Columns Right -->
+                <div class="home-footer__links-group">
+                    <div class="home-footer__col">
+                        <ul class="home-footer__list">
+                            <li><a href="search.html">Featured Courses</a></li>
+                            <li><a href="search.html">Featured Categories</a></li>
+                            <li><a href="search.html?cat=business">Business</a></li>
+                            <li><a href="search.html?cat=it">IT</a></li>
+                            <li><a href="search.html?cat=design">Design</a></li>
+                        </ul>
+                    </div>
+                    <div class="home-footer__col">
+                        <ul class="home-footer__list">
+                            <li><a href="search.html?cat=development">Development</a></li>
+                            <li><a href="search.html?cat=marketing">Marketing</a></li>
+                            <li><a href="search.html?cat=photography">Photography</a></li>
+                            <li><a href="search.html?cat=finance">Finance</a></li>
+                            <li><a href="search.html?cat=sport">Sport</a></li>
+                        </ul>
+                    </div>
+                    <div class="home-footer__col">
+                        <ul class="home-footer__list">
+                            <li><a href="register.html">Become a Creator</a></li>
+                            <li><a href="#">Affiliate Program</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Line -->
+            <div class="home-footer__bottom">
+                <span class="home-footer__copyright">@ 2026 ByteSpace by Atiar Osman. All rights reserved.</span>
+                <div class="home-footer__legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookies Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
