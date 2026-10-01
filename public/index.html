@@ -160,12 +160,123 @@
     <section class="your-courses-section" id="your-courses-section">
         <div class="your-courses-container">
             <div id="home-your-courses-content">
-                <!-- Injected dynamically by JS based on user enrollment status -->
-                <div class="enrolled-loading-state" id="home-courses-loading"
-                    style="text-align: center; padding: 40px 0;">
-                    <div class="spinner-ring"></div>
-                    <p style="margin-top: 10px; color: var(--gray-400); font-size: 14px;">Loading your learning
-                        dashboard...</p>
+                <div class="home-empty-courses-wrapper">
+                    <div class="home-suggested-section">
+                        <div class="home-suggested__header">
+                            <div>
+                                <span class="section-tag-pill">Recommended For You</span>
+                                <h2 class="home-suggested__title">Suggested Courses to Get You Started</h2>
+                                <p class="home-suggested__desc">Hand-picked top-rated courses to kickstart your creative journey today.</p>
+                            </div>
+                            <a href="search.html" class="home-suggested__view-catalog">
+                                Explore Full Catalog &rarr;
+                            </a>
+                        </div>
+
+                        <div class="home-suggested__grid">
+                            <div class="suggested-course-card">
+                                <a href="course-detail.html?id=figma" class="suggested-card-link">
+                                    <div class="suggested-course-card__img-box">
+                                        <img src="figma-images/course_1_wireframe.jpg" alt="Learn Figma from Basic">
+                                        <div class="suggested-course-card__badges">
+                                            <span class="card-badge">17 Lessons</span>
+                                            <span class="card-badge">2 hours</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="suggested-course-card__body">
+                                    <div class="suggested-course-card__title-row">
+                                        <a href="course-detail.html?id=figma" class="suggested-title-link">
+                                            <h3 class="suggested-course-card__title">Learn Figma from Basic</h3>
+                                        </a>
+                                        <span class="suggested-rating">4.8 &#9733;</span>
+                                    </div>
+                                    <p class="suggested-author">by purepearl studio</p>
+                                    <div class="suggested-price-row">
+                                        <div class="price-box">
+                                            <span class="price-val">$25</span>
+                                            <span class="price-sub">/lifetime</span>
+                                        </div>
+                                        <div class="suggested-action-btns">
+                                            <a href="course-detail.html?id=figma" class="btn-suggested-view">View</a>
+                                            <button type="button" class="btn-suggested-add-cart" onclick='addToCart({"id":"figma","title":"Learn Figma from Basic","author":"purepearl studio","price":25,"image":"figma-images/course_1_wireframe.jpg"})'>
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="suggested-course-card">
+                                <a href="course-detail.html?id=digital-asset" class="suggested-card-link">
+                                    <div class="suggested-course-card__img-box">
+                                        <img src="figma-images/course_2_icons.jpg" alt="Build Digital Asset">
+                                        <div class="suggested-course-card__badges">
+                                            <span class="card-badge">24 Lessons</span>
+                                            <span class="card-badge">3.5 hours</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="suggested-course-card__body">
+                                    <div class="suggested-course-card__title-row">
+                                        <a href="course-detail.html?id=digital-asset" class="suggested-title-link">
+                                            <h3 class="suggested-course-card__title">Build Digital Asset</h3>
+                                        </a>
+                                        <span class="suggested-rating">4.9 &#9733;</span>
+                                    </div>
+                                    <p class="suggested-author">by purepearl studio</p>
+                                    <div class="suggested-price-row">
+                                        <div class="price-box">
+                                            <span class="price-val">$25</span>
+                                            <span class="price-sub">/lifetime</span>
+                                        </div>
+                                        <div class="suggested-action-btns">
+                                            <a href="course-detail.html?id=digital-asset" class="btn-suggested-view">View</a>
+                                            <button type="button" class="btn-suggested-add-cart" onclick='addToCart({"id":"digital-asset","title":"Build Digital Asset","author":"purepearl studio","price":25,"image":"figma-images/course_2_icons.jpg"})'>
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="suggested-course-card">
+                                <a href="course-detail.html?id=big-data" class="suggested-card-link">
+                                    <div class="suggested-course-card__img-box">
+                                        <img src="figma-images/course_3_charts.jpg" alt="the Power of Big Data">
+                                        <div class="suggested-course-card__badges">
+                                            <span class="card-badge">19 Lessons</span>
+                                            <span class="card-badge">2.8 hours</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="suggested-course-card__body">
+                                    <div class="suggested-course-card__title-row">
+                                        <a href="course-detail.html?id=big-data" class="suggested-title-link">
+                                            <h3 class="suggested-course-card__title">the Power of Big Data</h3>
+                                        </a>
+                                        <span class="suggested-rating">4.7 &#9733;</span>
+                                    </div>
+                                    <p class="suggested-author">by purepearl studio</p>
+                                    <div class="suggested-price-row">
+                                        <div class="price-box">
+                                            <span class="price-val">$25</span>
+                                            <span class="price-sub">/lifetime</span>
+                                        </div>
+                                        <div class="suggested-action-btns">
+                                            <a href="course-detail.html?id=big-data" class="btn-suggested-view">View</a>
+                                            <button type="button" class="btn-suggested-add-cart" onclick='addToCart({"id":"big-data","title":"the Power of Big Data","author":"purepearl studio","price":25,"image":"figma-images/course_3_charts.jpg"})'>
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

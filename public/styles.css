@@ -5721,7 +5721,8 @@ input {
 /* ============================================================
    CHECKOUT SUCCESS MODAL
    ============================================================ */
-.checkout-modal-overlay {
+.checkout-modal-overlay,
+.checkout-modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -5736,12 +5737,14 @@ input {
     padding: 24px;
 }
 
-.checkout-modal-overlay.modal--open {
-    display: flex;
+.checkout-modal-overlay.modal--open,
+.checkout-modal-backdrop.modal--open {
+    display: flex !important;
     animation: fadeIn 0.3s ease;
 }
 
-.checkout-modal {
+.checkout-modal,
+.checkout-modal-card {
     background: #FFFFFF;
     border-radius: 24px;
     padding: 40px;
@@ -5757,7 +5760,8 @@ input {
     100% { transform: scale(1); opacity: 1; }
 }
 
-.modal-success-icon {
+.modal-success-icon,
+.checkout-success-icon {
     width: 80px;
     height: 80px;
     background: #D4FB20;
@@ -5769,7 +5773,8 @@ input {
     box-shadow: 0 8px 24px rgba(212, 251, 32, 0.4);
 }
 
-.modal-title {
+.modal-title,
+.checkout-modal-title {
     font-family: 'Poppins', sans-serif;
     font-size: 26px;
     font-weight: 800;
@@ -5777,13 +5782,15 @@ input {
     margin-bottom: 8px;
 }
 
-.modal-desc {
+.modal-desc,
+.checkout-modal-desc {
     color: #64748B;
     font-size: 15px;
     margin-bottom: 24px;
 }
 
-.checkout-success-courses {
+.checkout-success-courses,
+.checkout-receipt-box {
     max-height: 180px;
     overflow-y: auto;
     margin-bottom: 24px;
