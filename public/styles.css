@@ -1021,7 +1021,8 @@ input {
     min-height: 100vh;
     background: var(--persian-blue-800);
     display: flex;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
 }
 
@@ -2121,9 +2122,14 @@ input {
    AUTH PAGES (Login, Register, Forgot Password, Reset Password)
    Exact match to Figma: Login-25019_346.png & Register-25019_195.png
    ============================================================ */
+html:has(body.auth-page),
+body.auth-page {
+    min-height: 100%;
+}
+
 .auth-page {
     min-height: 100vh;
-    height: 100vh;
+    min-height: 100dvh;
     background-color: var(--persian-blue-800);
     background-image: 
         radial-gradient(circle at 10% 20%, rgba(212, 251, 32, 0.08) 0%, transparent 40%),
@@ -2135,7 +2141,8 @@ input {
     flex-direction: column;
     position: relative;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
 }
 
 .auth-header {
@@ -2829,6 +2836,70 @@ input {
     }
     .auth-card {
         padding: 24px 18px;
+    }
+}
+
+@media (max-height: 660px) {
+    .auth-header {
+        padding: 10px clamp(20px, 4vw, 48px);
+    }
+    .auth-header__logo-text {
+        font-size: 22px;
+    }
+    .auth-container {
+        padding: 4px clamp(20px, 4vw, 48px) 12px;
+        gap: 28px;
+    }
+    .auth-showcase__title {
+        font-size: 28px;
+        margin-bottom: 6px;
+    }
+    .auth-showcase__desc {
+        font-size: 13.5px;
+        margin-bottom: 12px;
+        line-height: 1.45;
+    }
+    .auth-stage {
+        height: 320px;
+        transform: scale(0.85);
+        transform-origin: top center;
+    }
+    .auth-card {
+        padding: 18px 26px;
+    }
+    .auth-card__switch {
+        margin-bottom: 10px;
+    }
+    .auth-card__header {
+        margin-bottom: 10px;
+    }
+    .auth-card__title {
+        font-size: 22px;
+    }
+    .auth-card__fields {
+        gap: 9px;
+    }
+    .auth-field__input {
+        height: 38px;
+    }
+    .auth-card__submit-btn {
+        height: 40px;
+        font-size: 14.5px;
+    }
+    .auth-divider {
+        margin: 10px 0;
+    }
+    .auth-social__btn {
+        height: 38px;
+        font-size: 13px;
+    }
+    .auth-demo-box {
+        margin-top: 6px;
+        padding: 4px 8px;
+    }
+    .auth-card__footer {
+        margin-top: 8px;
+        font-size: 12px;
     }
 }
 
